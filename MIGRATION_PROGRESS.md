@@ -224,7 +224,7 @@ cargo fmt
 cargo clippy
 
 # Run
-cargo run --bin chatapp -- run app.rs
+cargo run --bin platypus -- run app.rs
 ```
 
 ## Next Steps

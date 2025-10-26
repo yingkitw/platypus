@@ -1,13 +1,13 @@
 [package]
-name = "chatapp-server"
+name = "platypus-server"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 
 [dependencies]
-chatapp-core = { path = "../chatapp-core" }
-chatapp-proto = { path = "../chatapp-proto" }
-chatapp-runtime = { path = "../chatapp-runtime" }
+platypus-core = { path = "../platypus-core" }
+platypus-proto = { path = "../platypus-proto" }
+platypus-runtime = { path = "../platypus-runtime" }
 tokio = { workspace = true }
 axum = { workspace = true }
 tower = { workspace = true }

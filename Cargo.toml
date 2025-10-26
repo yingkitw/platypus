@@ -1,10 +1,10 @@
 [workspace]
 members = [
-    "crates/chatapp-core",
-    "crates/chatapp-proto",
-    "crates/chatapp-runtime",
-    "crates/chatapp-server",
-    "crates/chatapp-cli",
+    "crates/platypus-core",
+    "crates/platypus-proto",
+    "crates/platypus-runtime",
+    "crates/platypus-server",
+    "crates/platypus-cli",
 ]
 resolver = "2"
 
@@ -12,7 +12,7 @@ resolver = "2"
 version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
-repository = "https://github.com/yingkitw/chatapp"
+repository = "https://github.com/yingkitw/platypus"
 
 [workspace.dependencies]
 tokio = { version = "1.40", features = ["full"] }

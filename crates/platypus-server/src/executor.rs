@@ -1,9 +1,9 @@
 //! Script execution and delta generation for handling user interactions.
 
-use chatapp_core::state::{Delta, DeltaGenerator};
-use chatapp_core::widget::WidgetValue;
-use chatapp_runtime::{St, SessionStore};
-use chatapp_core::session::SessionId;
+use platypus_core::state::{Delta, DeltaGenerator};
+use platypus_core::widget::WidgetValue;
+use platypus_runtime::{St, SessionStore};
+use platypus_core::session::SessionId;
 use std::sync::Arc;
 
 /// Handles script execution and generates UI deltas
@@ -72,7 +72,7 @@ impl ScriptExecutor {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use chatapp_core::session::SessionId;
+    use platypus_core::session::SessionId;
 
     #[test]
     fn test_executor_creation() {

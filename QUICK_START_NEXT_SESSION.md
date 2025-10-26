@@ -16,21 +16,21 @@
 
 ### Terminal 1: Backend
 ```bash
-cd /Users/yingkitw/Desktop/productivity\ project/chatapp
-cargo run --bin chatapp-cli -- run examples/demo.rs
+cd /Users/yingkitw/Desktop/productivity\ project/platypus
+cargo run --bin platypus-cli -- run examples/demo.rs
 ```
 Expected: Server on `http://localhost:8000`
 
 ### Terminal 2: Frontend
 ```bash
-cd /Users/yingkitw/Desktop/productivity\ project/chatapp/frontend
+cd /Users/yingkitw/Desktop/productivity\ project/platypus/frontend
 npm run dev
 ```
 Expected: Frontend on `http://localhost:3000`
 
 ### Terminal 3: Tests
 ```bash
-cd /Users/yingkitw/Desktop/productivity\ project/chatapp/frontend
+cd /Users/yingkitw/Desktop/productivity\ project/platypus/frontend
 npm run test:integration
 ```
 Expected: 5/5 tests passing
@@ -67,9 +67,9 @@ Expected: 5/5 tests passing
 ## Key Files to Know
 
 ### Backend
-- `crates/chatapp-server/src/message.rs` - Proto serialization
-- `crates/chatapp-server/src/executor.rs` - Script execution
-- `crates/chatapp-server/src/ws.rs` - WebSocket handler
+- `crates/platypus-server/src/message.rs` - Proto serialization
+- `crates/platypus-server/src/executor.rs` - Script execution
+- `crates/platypus-server/src/ws.rs` - WebSocket handler
 
 ### Frontend
 - `frontend/src/proto.ts` - Proto utilities
@@ -109,7 +109,7 @@ cd frontend && npm run test:integration
 ### Run
 ```bash
 # Backend
-cargo run --bin chatapp-cli -- run examples/demo.rs
+cargo run --bin platypus-cli -- run examples/demo.rs
 
 # Frontend
 cd frontend && npm run dev
@@ -217,7 +217,7 @@ npm run type-check
 **Ready to Start?**
 
 1. Open 3 terminals
-2. Terminal 1: `cargo run --bin chatapp-cli -- run examples/demo.rs`
+2. Terminal 1: `cargo run --bin platypus-cli -- run examples/demo.rs`
 3. Terminal 2: `cd frontend && npm run dev`
 4. Terminal 3: `cd frontend && npm run test:integration`
 5. Open `http://localhost:3000` in browser

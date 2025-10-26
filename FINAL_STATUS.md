@@ -27,11 +27,11 @@ Successfully completed major migration milestones including:
 ## Backend Implementation
 
 ### Core Components
-- **chatapp-core** (12 tests): 30+ element types, traits, state management
-- **chatapp-proto** (0 tests): 40+ proto message definitions
-- **chatapp-runtime** (41 tests): St API, SessionStore, DeltaGenerator
-- **chatapp-server** (7 tests): Axum server, WebSocket, proto serialization, executor
-- **chatapp-cli**: CLI tool for running apps
+- **platypus-core** (12 tests): 30+ element types, traits, state management
+- **platypus-proto** (0 tests): 40+ proto message definitions
+- **platypus-runtime** (41 tests): St API, SessionStore, DeltaGenerator
+- **platypus-server** (7 tests): Axum server, WebSocket, proto serialization, executor
+- **platypus-cli**: CLI tool for running apps
 
 ### Key Features
 ✅ Proto message serialization (binary protocol)  
@@ -148,8 +148,8 @@ Metric (with delta)
 ## Files Created This Session
 
 ### Backend (~510 LOC)
-- `crates/chatapp-server/src/message.rs` - Proto serialization
-- `crates/chatapp-server/src/executor.rs` - Script execution
+- `crates/platypus-server/src/message.rs` - Proto serialization
+- `crates/platypus-server/src/executor.rs` - Script execution
 
 ### Frontend (~1,850 LOC)
 - `frontend/src/connection.ts` - WebSocket handler

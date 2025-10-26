@@ -202,10 +202,10 @@ cargo bench --bench element_benchmarks
 
 ### Unit Tests
 ```
-chatapp-core: 56 tests ✅
-chatapp-runtime: 8 tests ✅
-chatapp-server: 10 tests ✅
-chatapp-proto: 0 tests ✅
+platypus-core: 56 tests ✅
+platypus-runtime: 8 tests ✅
+platypus-server: 10 tests ✅
+platypus-proto: 0 tests ✅
 ```
 
 ### Integration Tests
@@ -364,8 +364,8 @@ fn test_slider_element() {
 ### Creating Elements
 
 ```rust
-use chatapp_core::elements::*;
-use chatapp_core::element::ElementId;
+use platypus_core::elements::*;
+use platypus_core::element::ElementId;
 
 // Using factory
 let button = ElementFactory::button(ElementId::new(1), "Click me");

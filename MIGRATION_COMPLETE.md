@@ -233,22 +233,22 @@ npm run build
 
 ### 2. Backend Deployment
 ```bash
-systemctl stop chatapp
-cp target/release/chatapp-cli /app/
-systemctl start chatapp
+systemctl stop platypus
+cp target/release/platypus-cli /app/
+systemctl start platypus
 curl http://localhost:8000/health
 ```
 
 ### 3. Frontend Deployment
 ```bash
-aws s3 sync frontend/dist/ s3://chatapp-frontend/
+aws s3 sync frontend/dist/ s3://platypus-frontend/
 aws cloudfront create-invalidation --distribution-id E123 --paths "/*"
 ```
 
 ### 4. Verification
 ```bash
 npm run test:smoke
-curl -i https://chatapp.example.com/health
+curl -i https://platypus.example.com/health
 ```
 
 ## Remaining Work (15%)

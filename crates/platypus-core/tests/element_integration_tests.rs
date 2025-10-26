@@ -1,8 +1,8 @@
 //! Comprehensive integration tests for element system.
 
-use chatapp_core::element::ElementId;
-use chatapp_core::elements::*;
-use chatapp_core::traits::*;
+use platypus_core::element::ElementId;
+use platypus_core::elements::*;
+use platypus_core::traits::*;
 use serde_json::json;
 
 #[test]

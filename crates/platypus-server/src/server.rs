@@ -14,7 +14,7 @@ use std::sync::Arc;
 use std::time::Instant;
 use tower_http::cors::CorsLayer;
 use tower_http::trace::TraceLayer;
-use chatapp_runtime::SessionStore;
+use platypus_runtime::SessionStore;
 
 /// Server configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]

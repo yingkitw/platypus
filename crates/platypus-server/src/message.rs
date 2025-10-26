@@ -1,8 +1,8 @@
 //! Message handling for proto serialization and deserialization.
 
-use chatapp_core::element::ElementType;
-use chatapp_core::state::Delta as CoreDelta;
-use chatapp_proto::*;
+use platypus_core::element::ElementType;
+use platypus_core::state::Delta as CoreDelta;
+use platypus_proto::*;
 use prost::Message;
 use uuid::Uuid;
 
@@ -358,7 +358,7 @@ pub fn deserialize_back_msg(bytes: &[u8]) -> Result<BackMsg, prost::DecodeError>
 #[cfg(test)]
 mod tests {
     use super::*;
-    use chatapp_core::element::ElementId;
+    use platypus_core::element::ElementId;
 
     #[test]
     fn test_element_type_to_proto_text() {

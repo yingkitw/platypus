@@ -3,7 +3,7 @@
 use axum::extract::ws::{WebSocket, WebSocketUpgrade, Message};
 use futures::{SinkExt, StreamExt};
 use std::sync::Arc;
-use chatapp_runtime::SessionStore;
+use platypus_runtime::SessionStore;
 use crate::message;
 use crate::executor::ScriptExecutor;
 
@@ -59,7 +59,7 @@ async fn handle_socket(socket: WebSocket, session_store: Arc<SessionStore>) {
                         // Handle the message based on its type
                         if let Some(msg_type) = back_msg.r#type {
                             match msg_type {
-                                chatapp_proto::back_msg::Type::WidgetStateChange(widget_change) => {
+                                platypus_proto::back_msg::Type::WidgetStateChange(widget_change) => {
                                     let widget_key = &widget_change.widget_key;
                                     tracing::debug!("Widget state change: {}", widget_key);
                                     
@@ -80,7 +80,7 @@ async fn handle_socket(socket: WebSocket, session_store: Arc<SessionStore>) {
                                         }
                                     }
                                 }
-                                chatapp_proto::back_msg::Type::RerunScript(_) => {
+                                platypus_proto::back_msg::Type::RerunScript(_) => {
                                     tracing::debug!("Script rerun requested");
                                     
                                     // Rerun script
@@ -96,7 +96,7 @@ async fn handle_socket(socket: WebSocket, session_store: Arc<SessionStore>) {
                                         }
                                     }
                                 }
-                                chatapp_proto::back_msg::Type::UserInteraction(interaction) => {
+                                platypus_proto::back_msg::Type::UserInteraction(interaction) => {
                                     tracing::debug!("User interaction: {}", interaction.interaction_type);
                                 }
                             }

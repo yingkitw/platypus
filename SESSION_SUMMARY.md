@@ -26,7 +26,7 @@ Continued the Streamlit → Chatapp migration with focus on proto message serial
 - Result: **Proto definitions now cover all Rust types** ✅
 
 ### 3. Message Serialization Module
-Created `chatapp-server/src/message.rs` with:
+Created `platypus-server/src/message.rs` with:
 - `element_type_to_proto()`: Type conversion (30+ element types)
 - `create_delta_msg()`: Delta message creation
 - `create_session_msg()`: Session initialization
@@ -58,16 +58,16 @@ Result: **Robust test coverage maintained** ✅
 ## Code Changes Summary
 
 ### Files Modified
-- `crates/chatapp-runtime/src/context.rs` - 2 imports removed
-- `crates/chatapp-server/src/handler.rs` - 1 import removed
-- `crates/chatapp-server/src/server.rs` - 1 import removed
-- `crates/chatapp-server/src/ws.rs` - Updated to use proto
-- `crates/chatapp-server/src/lib.rs` - Added message module
-- `crates/chatapp-cli/src/main.rs` - 1 import removed
-- `crates/chatapp-proto/proto/element.proto` - Expanded definitions
+- `crates/platypus-runtime/src/context.rs` - 2 imports removed
+- `crates/platypus-server/src/handler.rs` - 1 import removed
+- `crates/platypus-server/src/server.rs` - 1 import removed
+- `crates/platypus-server/src/ws.rs` - Updated to use proto
+- `crates/platypus-server/src/lib.rs` - Added message module
+- `crates/platypus-cli/src/main.rs` - 1 import removed
+- `crates/platypus-proto/proto/element.proto` - Expanded definitions
 
 ### Files Created
-- `crates/chatapp-server/src/message.rs` - Proto serialization (~400 LOC)
+- `crates/platypus-server/src/message.rs` - Proto serialization (~400 LOC)
 - `PHASE_3_PROGRESS.md` - Phase 3 documentation
 - `MIGRATION_PROGRESS.md` - Overall migration status
 - `SESSION_SUMMARY.md` - This file

@@ -7,7 +7,7 @@ Continued the Streamlit-to-Chatapp migration by implementing script execution an
 ## Completed Tasks
 
 ### 1. Script Executor Module ✅
-Created `chatapp-server/src/executor.rs` with:
+Created `platypus-server/src/executor.rs` with:
 - **ScriptExecutor struct**: Manages script execution and delta generation
 - **execute_script()**: Executes app logic and generates UI deltas
 - **handle_widget_change()**: Processes widget state changes and reruns script
@@ -96,19 +96,19 @@ WebSocket Handler
 ## Files Modified/Created
 
 ### Created
-- `crates/chatapp-server/src/executor.rs` - Script execution (~110 LOC)
+- `crates/platypus-server/src/executor.rs` - Script execution (~110 LOC)
 
 ### Modified
-- `crates/chatapp-server/src/lib.rs` - Added executor module
-- `crates/chatapp-server/src/ws.rs` - Integrated executor for message handling
+- `crates/platypus-server/src/lib.rs` - Added executor module
+- `crates/platypus-server/src/ws.rs` - Integrated executor for message handling
 
 ## Test Results
 
 ```
-chatapp-core:       12 tests ✅
-chatapp-proto:       0 tests (proto only)
-chatapp-runtime:     8 tests ✅
-chatapp-server:     10 tests ✅ (3 new executor tests)
+platypus-core:       12 tests ✅
+platypus-proto:       0 tests (proto only)
+platypus-runtime:     8 tests ✅
+platypus-server:     10 tests ✅ (3 new executor tests)
 ────────────────────────────────
 Total:              30 tests ✅ (100% pass rate)
 ```

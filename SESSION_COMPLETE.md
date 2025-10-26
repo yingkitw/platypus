@@ -257,11 +257,11 @@ UI Re-render
 
 ```bash
 # Terminal 1: Start backend
-cd /Users/yingkitw/Desktop/productivity\ project/chatapp
-cargo run --bin chatapp-cli -- run examples/demo.rs
+cd /Users/yingkitw/Desktop/productivity\ project/platypus
+cargo run --bin platypus-cli -- run examples/demo.rs
 
 # Terminal 2: Start frontend
-cd /Users/yingkitw/Desktop/productivity\ project/chatapp/frontend
+cd /Users/yingkitw/Desktop/productivity\ project/platypus/frontend
 npm run dev
 
 # Terminal 3: Open browser

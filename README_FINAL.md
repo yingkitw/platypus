@@ -42,30 +42,30 @@ Chatapp is a modern web app generator that enables developers to build interacti
 
 ### Backend (Rust + Axum)
 ```
-chatapp-core
+platypus-core
 ├── Element types (30+)
 ├── Widget traits
 ├── State management
 └── Delta generation
 
-chatapp-proto
+platypus-proto
 ├── Proto definitions (40+)
 ├── Message serialization
 └── Binary protocol
 
-chatapp-runtime
+platypus-runtime
 ├── St API
 ├── SessionStore
 ├── DeltaGenerator
 └── Script execution
 
-chatapp-server
+platypus-server
 ├── Axum web server
 ├── WebSocket handler
 ├── Proto serialization
 └── Executor
 
-chatapp-cli
+platypus-cli
 └── CLI tool
 ```
 
@@ -102,7 +102,7 @@ src/
 
 ### Backend Setup
 ```bash
-cd /path/to/chatapp
+cd /path/to/platypus
 cargo build --release
 cargo test
 cargo run --release
@@ -318,19 +318,19 @@ npm run test:integration
 ## 📞 Support
 
 ### Documentation
-- GitHub Wiki: https://github.com/chatapp/wiki
-- API Docs: https://docs.chatapp.example.com
-- Examples: https://examples.chatapp.example.com
+- GitHub Wiki: https://github.com/platypus/wiki
+- API Docs: https://docs.platypus.example.com
+- Examples: https://examples.platypus.example.com
 
 ### Community
-- GitHub Issues: https://github.com/chatapp/issues
-- Discussions: https://github.com/chatapp/discussions
-- Slack: https://chatapp.slack.com
+- GitHub Issues: https://github.com/platypus/issues
+- Discussions: https://github.com/platypus/discussions
+- Slack: https://platypus.slack.com
 
 ### Enterprise
-- Email: enterprise@chatapp.example.com
+- Email: enterprise@platypus.example.com
 - Phone: +1-555-CHATAPP
-- Website: https://chatapp.example.com
+- Website: https://platypus.example.com
 
 ---
 

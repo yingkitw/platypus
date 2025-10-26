@@ -203,14 +203,14 @@ npm run build
 ### 2. Backend Deployment
 ```bash
 # Stop current service
-systemctl stop chatapp
+systemctl stop platypus
 
 # Deploy new version
-cp target/release/chatapp-cli /app/
-cp -r crates/chatapp-proto/proto /app/
+cp target/release/platypus-cli /app/
+cp -r crates/platypus-proto/proto /app/
 
 # Start service
-systemctl start chatapp
+systemctl start platypus
 
 # Verify
 curl http://localhost:8000/health
@@ -219,19 +219,19 @@ curl http://localhost:8000/health
 ### 3. Frontend Deployment
 ```bash
 # Deploy to CDN
-aws s3 sync frontend/dist/ s3://chatapp-frontend/
+aws s3 sync frontend/dist/ s3://platypus-frontend/
 
 # Invalidate cache
 aws cloudfront create-invalidation --distribution-id E123 --paths "/*"
 
 # Verify
-curl https://chatapp.example.com
+curl https://platypus.example.com
 ```
 
 ### 4. Post-deployment
 ```bash
 # Monitor logs
-tail -f /var/log/chatapp/app.log
+tail -f /var/log/platypus/app.log
 
 # Check metrics
 curl http://localhost:8000/metrics
@@ -240,7 +240,7 @@ curl http://localhost:8000/metrics
 npm run test:smoke
 
 # Verify connectivity
-curl -i https://chatapp.example.com/health
+curl -i https://platypus.example.com/health
 ```
 
 ## Monitoring & Alerting
@@ -277,14 +277,14 @@ curl -i https://chatapp.example.com/health
 ### If Deployment Fails
 ```bash
 # Stop service
-systemctl stop chatapp
+systemctl stop platypus
 
 # Restore previous version
-cp /app/backup/chatapp-cli /app/
+cp /app/backup/platypus-cli /app/
 cp -r /app/backup/proto /app/
 
 # Start service
-systemctl start chatapp
+systemctl start platypus
 
 # Verify
 curl http://localhost:8000/health
@@ -293,7 +293,7 @@ curl http://localhost:8000/health
 ### If Issues Detected
 ```bash
 # Check logs
-journalctl -u chatapp -n 100
+journalctl -u platypus -n 100
 
 # Monitor metrics
 watch -n 1 'curl http://localhost:8000/metrics'

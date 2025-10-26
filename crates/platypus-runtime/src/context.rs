@@ -1,7 +1,7 @@
 //! St context - Main API for building Webag applications.
 
-use chatapp_core::element::{ElementId, ElementType};
-use chatapp_core::state::DeltaGenerator;
+use platypus_core::element::{ElementId, ElementType};
+use platypus_core::state::DeltaGenerator;
 
 /// The main context for building Webag applications.
 /// Provides an API similar to Streamlit's `st` module.
@@ -642,7 +642,7 @@ impl St {
     }
 
     /// Get all deltas.
-    pub fn take_deltas(&self) -> Vec<chatapp_core::state::Delta> {
+    pub fn take_deltas(&self) -> Vec<platypus_core::state::Delta> {
         self.delta_gen.take_deltas()
     }
 }

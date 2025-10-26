@@ -1,17 +1,17 @@
 [package]
-name = "chatapp-cli"
+name = "platypus-cli"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 
 [[bin]]
-name = "chatapp"
+name = "platypus"
 path = "src/main.rs"
 
 [dependencies]
-chatapp-core = { path = "../chatapp-core" }
-chatapp-runtime = { path = "../chatapp-runtime" }
-chatapp-server = { path = "../chatapp-server" }
+platypus-core = { path = "../platypus-core" }
+platypus-runtime = { path = "../platypus-runtime" }
+platypus-server = { path = "../platypus-server" }
 tokio = { workspace = true }
 clap = { workspace = true }
 tracing = { workspace = true }

@@ -137,30 +137,30 @@ root/
 ```
 Rust 1.70+ / Tokio 1.40 / Axum 0.7 / Prost 0.12
 
-chatapp-core (12 tests)
+platypus-core (12 tests)
 ├── 30+ element types
 ├── Widget traits
 ├── State management
 └── Delta generation
 
-chatapp-proto (40+ messages)
+platypus-proto (40+ messages)
 ├── Proto definitions
 ├── Serialization
 └── Binary protocol
 
-chatapp-runtime (41 tests)
+platypus-runtime (41 tests)
 ├── St API
 ├── SessionStore
 ├── DeltaGenerator
 └── Script execution
 
-chatapp-server (7 tests)
+platypus-server (7 tests)
 ├── Axum server
 ├── WebSocket handler
 ├── Proto serialization
 └── Executor
 
-chatapp-cli
+platypus-cli
 └── CLI tool
 ```
 

@@ -3,7 +3,7 @@
 use crate::error::Result;
 use dashmap::DashMap;
 use std::sync::Arc;
-use chatapp_core::session::{Session, SessionId};
+use platypus_core::session::{Session, SessionId};
 
 /// Manages active sessions.
 pub struct SessionStore {

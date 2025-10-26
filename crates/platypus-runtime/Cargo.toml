@@ -1,22 +1,21 @@
 [package]
-name = "chatapp-core"
+name = "platypus-runtime"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 
 [dependencies]
+platypus-core = { path = "../platypus-core" }
+platypus-proto = { path = "../platypus-proto" }
+tokio = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 uuid = { workspace = true }
 thiserror = { workspace = true }
 anyhow = { workspace = true }
-parking_lot = { workspace = true }
+tracing = { workspace = true }
 dashmap = { workspace = true }
+parking_lot = { workspace = true }
 
 [dev-dependencies]
 insta = { workspace = true }
-criterion = { version = "0.5", features = ["html_reports"] }
-
-[[bench]]
-name = "element_benchmarks"
-harness = false

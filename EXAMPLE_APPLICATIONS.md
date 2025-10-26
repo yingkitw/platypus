@@ -7,9 +7,9 @@ This document provides example applications using the Chatapp element system wit
 ## Example 1: Todo Application
 
 ```rust
-use chatapp_core::elements::*;
-use chatapp_core::element::ElementId;
-use chatapp_core::traits::*;
+use platypus_core::elements::*;
+use platypus_core::element::ElementId;
+use platypus_core::traits::*;
 
 fn create_todo_app() -> Result<()> {
     // Create main container
@@ -41,9 +41,9 @@ fn create_todo_app() -> Result<()> {
 ## Example 2: Survey Form
 
 ```rust
-use chatapp_core::elements::*;
-use chatapp_core::element::ElementId;
-use chatapp_core::traits::*;
+use platypus_core::elements::*;
+use platypus_core::element::ElementId;
+use platypus_core::traits::*;
 
 fn create_survey_form() -> Result<()> {
     let mut form = ContainerElement::new(ElementId::new(1));
@@ -87,9 +87,9 @@ fn create_survey_form() -> Result<()> {
 ## Example 3: Dashboard with Responsive Layout
 
 ```rust
-use chatapp_core::elements::*;
-use chatapp_core::element::ElementId;
-use chatapp_core::traits::*;
+use platypus_core::elements::*;
+use platypus_core::element::ElementId;
+use platypus_core::traits::*;
 
 fn create_responsive_dashboard() -> Result<()> {
     let mut dashboard = ResponsiveContainerElement::new(ElementId::new(1));
@@ -123,9 +123,9 @@ fn create_responsive_dashboard() -> Result<()> {
 ## Example 4: Settings Panel with Theming
 
 ```rust
-use chatapp_core::elements::*;
-use chatapp_core::element::ElementId;
-use chatapp_core::traits::*;
+use platypus_core::elements::*;
+use platypus_core::element::ElementId;
+use platypus_core::traits::*;
 
 fn create_settings_panel() -> Result<()> {
     let mut settings = ContainerElement::new(ElementId::new(1));
@@ -161,9 +161,9 @@ fn create_settings_panel() -> Result<()> {
 ## Example 5: Data Entry Form with Validation
 
 ```rust
-use chatapp_core::elements::*;
-use chatapp_core::element::ElementId;
-use chatapp_core::traits::*;
+use platypus_core::elements::*;
+use platypus_core::element::ElementId;
+use platypus_core::traits::*;
 
 fn create_data_entry_form() -> Result<()> {
     let mut form = ContainerElement::new(ElementId::new(1));
@@ -216,9 +216,9 @@ fn create_data_entry_form() -> Result<()> {
 ## Example 6: Event Calendar
 
 ```rust
-use chatapp_core::elements::*;
-use chatapp_core::element::ElementId;
-use chatapp_core::traits::*;
+use platypus_core::elements::*;
+use platypus_core::element::ElementId;
+use platypus_core::traits::*;
 
 fn create_event_calendar() -> Result<()> {
     let mut calendar = ContainerElement::new(ElementId::new(1));
@@ -266,8 +266,8 @@ fn create_event_calendar() -> Result<()> {
 ## Example 7: Using Element Factory
 
 ```rust
-use chatapp_core::elements::*;
-use chatapp_core::element::ElementId;
+use platypus_core::elements::*;
+use platypus_core::element::ElementId;
 
 fn create_with_factory() {
     // Using ElementFactory for quick creation
@@ -291,14 +291,14 @@ fn create_with_factory() {
 ## Example 8: Observable Elements
 
 ```rust
-use chatapp_core::traits_impl::*;
-use chatapp_core::traits::Observer;
-use chatapp_core::element::ElementId;
+use platypus_core::traits_impl::*;
+use platypus_core::traits::Observer;
+use platypus_core::element::ElementId;
 
 struct MyObserver;
 
 impl Observer for MyObserver {
-    fn on_change(&self, element_id: ElementId, change: &chatapp_core::traits::ElementChange) {
+    fn on_change(&self, element_id: ElementId, change: &platypus_core::traits::ElementChange) {
         println!("Element {} changed: {}", element_id.inner(), change.change_type);
     }
 }
@@ -319,7 +319,7 @@ fn create_observable_button() -> Result<()> {
 ## Example 9: Data-Bindable Inputs
 
 ```rust
-use chatapp_core::traits_impl::*;
+use platypus_core::traits_impl::*;
 use serde_json::json;
 
 fn create_data_bindable_form() -> Result<()> {
@@ -341,9 +341,9 @@ fn create_data_bindable_form() -> Result<()> {
 ## Example 10: Complete Application
 
 ```rust
-use chatapp_core::elements::*;
-use chatapp_core::element::ElementId;
-use chatapp_core::traits::*;
+use platypus_core::elements::*;
+use platypus_core::element::ElementId;
+use platypus_core::traits::*;
 
 fn create_complete_app() -> Result<()> {
     let mut app = ResponsiveContainerElement::new(ElementId::new(1));
@@ -394,7 +394,7 @@ To use these examples in your application:
 
 ```rust
 // Import the example function
-use chatapp_core::elements::*;
+use platypus_core::elements::*;
 
 // Create the app
 let app = create_todo_app()?;

@@ -1,7 +1,7 @@
 //! Integration tests for Chatapp runtime
 //! Tests Streamlit API compatibility and behavior
 
-use chatapp_runtime::prelude::*;
+use platypus_runtime::prelude::*;
 
 #[test]
 fn test_basic_display_elements() {
@@ -52,7 +52,7 @@ fn test_text_input_widget() {
     // Simulate user input by setting widget state
     st.delta_gen().set_widget(
         "name_key".to_string(),
-        chatapp_core::widget::WidgetValue::String("Jane".to_string()),
+        platypus_core::widget::WidgetValue::String("Jane".to_string()),
     );
     
     // Second call - should get updated value
@@ -70,7 +70,7 @@ fn test_number_input_widget() {
     // Simulate user input
     st.delta_gen().set_widget(
         "age_key".to_string(),
-        chatapp_core::widget::WidgetValue::Number(30.0),
+        platypus_core::widget::WidgetValue::Number(30.0),
     );
     
     let value2 = st.number_input("Age", 25.0, Some("age_key".to_string()));
@@ -87,7 +87,7 @@ fn test_slider_widget() {
     // Simulate user input
     st.delta_gen().set_widget(
         "score_key".to_string(),
-        chatapp_core::widget::WidgetValue::Number(75.0),
+        platypus_core::widget::WidgetValue::Number(75.0),
     );
     
     let value2 = st.slider("Score", 0.0, 100.0, 50.0, Some("score_key".to_string()));
@@ -104,7 +104,7 @@ fn test_checkbox_widget() {
     // Simulate user input
     st.delta_gen().set_widget(
         "agree_key".to_string(),
-        chatapp_core::widget::WidgetValue::Bool(true),
+        platypus_core::widget::WidgetValue::Bool(true),
     );
     
     let checked2 = st.checkbox("Agree", false, Some("agree_key".to_string()));
@@ -122,7 +122,7 @@ fn test_selectbox_widget() {
     // Simulate user input
     st.delta_gen().set_widget(
         "choice_key".to_string(),
-        chatapp_core::widget::WidgetValue::String("Option B".to_string()),
+        platypus_core::widget::WidgetValue::String("Option B".to_string()),
     );
     
     let selected2 = st.selectbox("Choose", options, 0, Some("choice_key".to_string()));
@@ -140,7 +140,7 @@ fn test_multiselect_widget() {
     // Simulate user input
     st.delta_gen().set_widget(
         "multi_key".to_string(),
-        chatapp_core::widget::WidgetValue::StringArray(vec!["A".to_string(), "C".to_string()]),
+        platypus_core::widget::WidgetValue::StringArray(vec!["A".to_string(), "C".to_string()]),
     );
     
     let selected2 = st.multiselect("Choose", options, vec![], Some("multi_key".to_string()));
@@ -160,7 +160,7 @@ fn test_button_widget() {
     // Simulate button click
     st.delta_gen().set_widget(
         "btn_key".to_string(),
-        chatapp_core::widget::WidgetValue::Bool(true),
+        platypus_core::widget::WidgetValue::Bool(true),
     );
     
     let clicked2 = st.button("Click me", Some("btn_key".to_string()));
@@ -263,9 +263,9 @@ fn test_widget_state_persistence() {
     st.checkbox("Active", true, Some("active".to_string()));
     
     // Simulate state changes
-    st.delta_gen().set_widget("name".to_string(), chatapp_core::widget::WidgetValue::String("Bob".to_string()));
-    st.delta_gen().set_widget("age".to_string(), chatapp_core::widget::WidgetValue::Number(30.0));
-    st.delta_gen().set_widget("active".to_string(), chatapp_core::widget::WidgetValue::Bool(false));
+    st.delta_gen().set_widget("name".to_string(), platypus_core::widget::WidgetValue::String("Bob".to_string()));
+    st.delta_gen().set_widget("age".to_string(), platypus_core::widget::WidgetValue::Number(30.0));
+    st.delta_gen().set_widget("active".to_string(), platypus_core::widget::WidgetValue::Bool(false));
     
     // Verify state persists
     let name = st.text_input("Name", "Alice", Some("name".to_string()));
@@ -311,23 +311,23 @@ fn test_multiple_reruns_simulation() {
     assert_eq!(count1, 0.0);
     
     // Simulate user incrementing the counter
-    st.delta_gen().set_widget("count".to_string(), chatapp_core::widget::WidgetValue::Number(1.0));
+    st.delta_gen().set_widget("count".to_string(), platypus_core::widget::WidgetValue::Number(1.0));
     
     // Second run (rerun after state change)
     let mut st2 = St::new();
     // Copy state from previous run
-    st2.delta_gen().set_widget("count".to_string(), chatapp_core::widget::WidgetValue::Number(1.0));
+    st2.delta_gen().set_widget("count".to_string(), platypus_core::widget::WidgetValue::Number(1.0));
     
     st2.title("Counter App");
     let count2 = st2.number_input("Count", 0.0, Some("count".to_string()));
     assert_eq!(count2, 1.0);
     
     // Simulate incrementing again
-    st2.delta_gen().set_widget("count".to_string(), chatapp_core::widget::WidgetValue::Number(2.0));
+    st2.delta_gen().set_widget("count".to_string(), platypus_core::widget::WidgetValue::Number(2.0));
     
     // Third run
     let mut st3 = St::new();
-    st3.delta_gen().set_widget("count".to_string(), chatapp_core::widget::WidgetValue::Number(2.0));
+    st3.delta_gen().set_widget("count".to_string(), platypus_core::widget::WidgetValue::Number(2.0));
     
     st3.title("Counter App");
     let count3 = st3.number_input("Count", 0.0, Some("count".to_string()));
@@ -367,7 +367,7 @@ fn test_text_area_widget() {
     // Simulate user input
     st.delta_gen().set_widget(
         "comments_key".to_string(),
-        chatapp_core::widget::WidgetValue::String("User's comment".to_string()),
+        platypus_core::widget::WidgetValue::String("User's comment".to_string()),
     );
     
     let text2 = st.text_area("Comments", "Enter text here", Some("comments_key".to_string()));
@@ -515,7 +515,7 @@ fn test_date_input() {
     // Simulate user input
     st.delta_gen().set_widget(
         "date_key".to_string(),
-        chatapp_core::widget::WidgetValue::String("2025-12-31".to_string()),
+        platypus_core::widget::WidgetValue::String("2025-12-31".to_string()),
     );
     
     let date2 = st.date_input("Select date", "2025-01-01", Some("date_key".to_string()));
@@ -532,7 +532,7 @@ fn test_time_input() {
     // Simulate user input
     st.delta_gen().set_widget(
         "time_key".to_string(),
-        chatapp_core::widget::WidgetValue::String("14:30".to_string()),
+        platypus_core::widget::WidgetValue::String("14:30".to_string()),
     );
     
     let time2 = st.time_input("Select time", "12:00", Some("time_key".to_string()));
@@ -549,7 +549,7 @@ fn test_color_picker() {
     // Simulate user input
     st.delta_gen().set_widget(
         "color_key".to_string(),
-        chatapp_core::widget::WidgetValue::String("#00FF00".to_string()),
+        platypus_core::widget::WidgetValue::String("#00FF00".to_string()),
     );
     
     let color2 = st.color_picker("Pick color", "#FF0000", Some("color_key".to_string()));
@@ -587,7 +587,7 @@ fn test_file_uploader() {
     // Simulate file upload
     st.delta_gen().set_widget(
         "file_key".to_string(),
-        chatapp_core::widget::WidgetValue::String("document.pdf".to_string()),
+        platypus_core::widget::WidgetValue::String("document.pdf".to_string()),
     );
     
     let file2 = st.file_uploader("Upload file", Some("file_key".to_string()));
@@ -625,7 +625,7 @@ fn test_radio_button() {
     // Simulate user selection
     st.delta_gen().set_widget(
         "radio_key".to_string(),
-        chatapp_core::widget::WidgetValue::String("Option B".to_string()),
+        platypus_core::widget::WidgetValue::String("Option B".to_string()),
     );
     
     let selected2 = st.radio("Choose", options, 0, Some("radio_key".to_string()));
@@ -747,7 +747,7 @@ fn test_camera_input() {
     // Simulate image capture
     st.delta_gen().set_widget(
         "camera_key".to_string(),
-        chatapp_core::widget::WidgetValue::String("data:image/jpeg;base64,/9j/4AAQSkZJRg...".to_string()),
+        platypus_core::widget::WidgetValue::String("data:image/jpeg;base64,/9j/4AAQSkZJRg...".to_string()),
     );
     
     let image2 = st.camera_input("Capture photo", Some("camera_key".to_string()));

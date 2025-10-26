@@ -3,10 +3,10 @@
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 use tracing_subscriber;
-use chatapp_server::AppServer;
+use platypus_server::AppServer;
 
 #[derive(Parser)]
-#[command(name = "chatapp")]
+#[command(name = "platypus")]
 #[command(about = "Chatapp - Web App Generator", long_about = None)]
 #[command(version)]
 struct Cli {
@@ -108,7 +108,7 @@ async fn run_app(
     println!("🚀 Starting Webag server on http://{}:{}", host, port);
     println!("📝 Open your browser and navigate to the URL above");
 
-    let config = chatapp_server::ServerConfig {
+    let config = platypus_server::ServerConfig {
         app_name: "Webag App".to_string(),
         host,
         port,

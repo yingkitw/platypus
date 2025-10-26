@@ -3,12 +3,12 @@
 //! Run with: cargo bench --bench element_benchmarks
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use chatapp_core::element::ElementId;
-use chatapp_core::elements::{
+use platypus_core::element::ElementId;
+use platypus_core::elements::{
     TextElement, ButtonElement, TextInputElement, SliderElement, CheckboxElement,
     ContainerElement, ResponsiveContainerElement, ThemedButtonElement,
 };
-use chatapp_core::traits::{Renderable, Validatable, Interactive, InteractionEvent, Container, Responsive, Themeable};
+use platypus_core::traits::{Renderable, Validatable, Interactive, InteractionEvent, Container, Responsive, Themeable};
 
 fn benchmark_element_creation(c: &mut Criterion) {
     c.bench_function("create_text_element", |b| {

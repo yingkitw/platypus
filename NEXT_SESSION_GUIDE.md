@@ -52,11 +52,11 @@ frontend/src/
 ### Backend Code
 ```
 crates/
-├── chatapp-core/              # Element types, traits
-├── chatapp-proto/             # Proto definitions
-├── chatapp-runtime/           # St API, SessionStore
-├── chatapp-server/            # Axum, WebSocket, executor
-└── chatapp-cli/               # CLI tool
+├── platypus-core/              # Element types, traits
+├── platypus-proto/             # Proto definitions
+├── platypus-runtime/           # St API, SessionStore
+├── platypus-server/            # Axum, WebSocket, executor
+└── platypus-cli/               # CLI tool
 ```
 
 ---
@@ -234,7 +234,7 @@ cargo test test_name -- --nocapture
 npm run test -- --testNamePattern="test_name"
 
 # Check logs
-tail -f /var/log/chatapp/app.log
+tail -f /var/log/platypus/app.log
 ```
 
 ### Performance Issues
@@ -260,9 +260,9 @@ curl http://localhost:8000/metrics
 - Security Lead: [contact]
 
 ### External Resources
-- GitHub: https://github.com/chatapp
-- Docs: https://docs.chatapp.example.com
-- Slack: #chatapp-dev
+- GitHub: https://github.com/platypus
+- Docs: https://docs.platypus.example.com
+- Slack: #platypus-dev
 
 ---
 
@@ -307,7 +307,7 @@ Before starting next session:
 
 ```bash
 # Backend
-cd /Users/yingkitw/Desktop/productivity\ project/chatapp
+cd /Users/yingkitw/Desktop/productivity\ project/platypus
 cargo build --release
 cargo test --release
 cargo run --release
@@ -327,7 +327,7 @@ open http://localhost:5173
 ./scripts/deploy-staging.sh
 
 # Monitor
-tail -f /var/log/chatapp/app.log
+tail -f /var/log/platypus/app.log
 watch -n 5 'curl -s http://localhost:8000/metrics'
 ```
 

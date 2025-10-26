@@ -9,10 +9,10 @@ pub type Result<T> = std::result::Result<T, Error>;
 #[derive(Error, Debug)]
 pub enum Error {
     #[error("Runtime error: {0}")]
-    Runtime(#[from] chatapp_runtime::Error),
+    Runtime(#[from] platypus_runtime::Error),
 
     #[error("Core error: {0}")]
-    Core(#[from] chatapp_core::Error),
+    Core(#[from] platypus_core::Error),
 
     #[error("WebSocket error: {0}")]
     WebSocket(String),

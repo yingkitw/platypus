@@ -7,7 +7,7 @@ pub type Result<T> = std::result::Result<T, Error>;
 #[derive(Error, Debug)]
 pub enum Error {
     #[error("Core error: {0}")]
-    Core(#[from] chatapp_core::Error),
+    Core(#[from] platypus_core::Error),
 
     #[error("Session error: {0}")]
     Session(String),

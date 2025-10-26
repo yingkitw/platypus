@@ -9,7 +9,7 @@
 
 ```bash
 # Navigate to project root
-cd /Users/yingkitw/Desktop/productivity\ project/chatapp
+cd /Users/yingkitw/Desktop/productivity\ project/platypus
 
 # Build backend
 cargo build
@@ -18,7 +18,7 @@ cargo build
 cargo test
 
 # Start server
-cargo run --bin chatapp-cli -- run examples/demo.rs
+cargo run --bin platypus-cli -- run examples/demo.rs
 ```
 
 ### Frontend Setup
@@ -46,7 +46,7 @@ npm run test:integration
 
 1. **Start Backend Server**
    ```bash
-   cargo run --bin chatapp-cli -- run examples/demo.rs
+   cargo run --bin platypus-cli -- run examples/demo.rs
    ```
    Expected: Server starts on `http://localhost:8000`
 
@@ -147,16 +147,16 @@ performanceTracker.log();
 3. **Deploy Backend**
    ```bash
    # Copy to server
-   scp target/release/chatapp-cli user@server:/app/
+   scp target/release/platypus-cli user@server:/app/
    
    # Start service
-   systemctl start chatapp
+   systemctl start platypus
    ```
 
 4. **Deploy Frontend**
    ```bash
    # Copy dist to web server
-   scp -r frontend/dist/* user@server:/var/www/chatapp/
+   scp -r frontend/dist/* user@server:/var/www/platypus/
    
    # Configure nginx/apache
    # Point to dist/index.html for SPA routing
@@ -181,7 +181,7 @@ SERVER_PORT=8000
 LOG_LEVEL=info
 
 # Database (future)
-DATABASE_URL=postgres://user:pass@localhost/chatapp
+DATABASE_URL=postgres://user:pass@localhost/platypus
 
 # Security
 CORS_ORIGIN=http://localhost:3000
@@ -254,7 +254,7 @@ import { performanceTracker } from './performance.ts';
 performanceTracker.log();
 
 // Enable debug logging
-localStorage.setItem('DEBUG', 'chatapp:*');
+localStorage.setItem('DEBUG', 'platypus:*');
 ```
 
 ## Rollback Procedure
@@ -263,17 +263,17 @@ localStorage.setItem('DEBUG', 'chatapp:*');
 
 ```bash
 # Revert to previous version
-systemctl stop chatapp
-cp /app/chatapp-cli.backup /app/chatapp-cli
-systemctl start chatapp
+systemctl stop platypus
+cp /app/platypus-cli.backup /app/platypus-cli
+systemctl start platypus
 ```
 
 ### If Frontend Deployment Fails
 
 ```bash
 # Revert to previous version
-rm -rf /var/www/chatapp/*
-cp -r /var/www/chatapp.backup/* /var/www/chatapp/
+rm -rf /var/www/platypus/*
+cp -r /var/www/platypus.backup/* /var/www/platypus/
 ```
 
 ## Scaling Considerations

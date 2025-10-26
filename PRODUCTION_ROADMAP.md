@@ -11,7 +11,7 @@
 #### Pre-deployment Verification
 ```bash
 # 1. Backend verification
-cd /app/chatapp
+cd /app/platypus
 cargo test --release
 cargo build --release
 cargo audit
@@ -45,20 +45,20 @@ npm run test:performance
 # Pre-deployment backup
 
 # 1. Database backup
-pg_dump -h prod-db.internal -U chatapp chatapp_prod > backup-prod-$(date +%Y%m%d).sql
+pg_dump -h prod-db.internal -U platypus platypus_prod > backup-prod-$(date +%Y%m%d).sql
 gzip backup-prod-*.sql
-aws s3 cp backup-prod-*.sql.gz s3://chatapp-backups/
+aws s3 cp backup-prod-*.sql.gz s3://platypus-backups/
 
 # 2. Configuration backup
-tar czf config-prod-$(date +%Y%m%d).tar.gz /app/chatapp/config/
-aws s3 cp config-prod-*.tar.gz s3://chatapp-backups/
+tar czf config-prod-$(date +%Y%m%d).tar.gz /app/platypus/config/
+aws s3 cp config-prod-*.tar.gz s3://platypus-backups/
 
 # 3. Application backup
-tar czf app-prod-$(date +%Y%m%d).tar.gz /app/chatapp/
-aws s3 cp app-prod-*.tar.gz s3://chatapp-backups/
+tar czf app-prod-$(date +%Y%m%d).tar.gz /app/platypus/
+aws s3 cp app-prod-*.tar.gz s3://platypus-backups/
 
 # 4. Verify backups
-aws s3 ls s3://chatapp-backups/ | tail -5
+aws s3 ls s3://platypus-backups/ | tail -5
 ```
 
 ### Week 2: Production Deployment
@@ -106,24 +106,24 @@ cargo build --release --locked
 # 3. Create deployment package
 echo "Creating deployment package..."
 mkdir -p deploy/
-cp target/release/chatapp-cli deploy/
-cp -r crates/chatapp-proto/proto deploy/
+cp target/release/platypus-cli deploy/
+cp -r crates/platypus-proto/proto deploy/
 cp config/production.toml deploy/config.toml
 
 # 4. Upload to production
 echo "Uploading to production..."
-scp -r deploy/ prod-server-1:/app/chatapp-new/
-scp -r deploy/ prod-server-2:/app/chatapp-new/
+scp -r deploy/ prod-server-1:/app/platypus-new/
+scp -r deploy/ prod-server-2:/app/platypus-new/
 
 # 5. Blue-green deployment
 echo "Performing blue-green deployment..."
-ssh prod-server-1 'cd /app && mv chatapp chatapp-old && mv chatapp-new chatapp'
-ssh prod-server-2 'cd /app && mv chatapp chatapp-old && mv chatapp-new chatapp'
+ssh prod-server-1 'cd /app && mv platypus platypus-old && mv platypus-new platypus'
+ssh prod-server-2 'cd /app && mv platypus platypus-old && mv platypus-new platypus'
 
 # 6. Start services
 echo "Starting services..."
-ssh prod-server-1 'systemctl start chatapp'
-ssh prod-server-2 'systemctl start chatapp'
+ssh prod-server-1 'systemctl start platypus'
+ssh prod-server-2 'systemctl start platypus'
 
 # 7. Health checks
 echo "Running health checks..."
@@ -154,13 +154,13 @@ tar czf dist-prod-$(date +%Y%m%d-%H%M%S).tar.gz dist/
 
 # 3. Upload to production S3
 echo "Uploading to S3..."
-aws s3 sync dist/ s3://chatapp-prod-frontend/ \
+aws s3 sync dist/ s3://platypus-prod-frontend/ \
   --delete \
   --cache-control "max-age=31536000" \
   --exclude "index.html" \
   --exclude "*.map"
 
-aws s3 cp dist/index.html s3://chatapp-prod-frontend/index.html \
+aws s3 cp dist/index.html s3://platypus-prod-frontend/index.html \
   --cache-control "max-age=3600" \
   --content-type "text/html"
 
@@ -173,7 +173,7 @@ aws cloudfront create-invalidation \
 # 5. Verify deployment
 echo "Verifying deployment..."
 sleep 30
-curl -I https://chatapp.example.com/ | grep -E "200|301|302"
+curl -I https://platypus.example.com/ | grep -E "200|301|302"
 
 echo "Frontend deployment complete!"
 ```
@@ -186,13 +186,13 @@ echo "Frontend deployment complete!"
 watch -n 5 'curl -s http://prod-server-1:8000/metrics | grep -E "http_requests|errors|latency"'
 
 # Monitor logs
-tail -f /var/log/chatapp/app.log | grep -E "ERROR|WARN"
+tail -f /var/log/platypus/app.log | grep -E "ERROR|WARN"
 
 # Monitor system resources
 watch -n 5 'free -h && df -h && top -bn1 | head -20'
 
 # Monitor database
-psql -h prod-db.internal -U chatapp -d chatapp_prod -c "SELECT count(*) FROM sessions; SELECT count(*) FROM users;"
+psql -h prod-db.internal -U platypus -d platypus_prod -c "SELECT count(*) FROM sessions; SELECT count(*) FROM users;"
 ```
 
 #### Performance Optimization

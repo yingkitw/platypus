@@ -19,11 +19,11 @@ The Streamlit-to-Chatapp migration is progressing successfully. Phase 1 (Foundat
 ```
 
 ### Test Results ✅
-- **chatapp-core**: 12 tests ✅
-- **chatapp-proto**: 0 tests (proto only)
-- **chatapp-runtime**: 41 tests ✅
-- **chatapp-server**: 7 tests ✅ (3 new message tests)
-- **chatapp-cli**: 0 tests (CLI only)
+- **platypus-core**: 12 tests ✅
+- **platypus-proto**: 0 tests (proto only)
+- **platypus-runtime**: 41 tests ✅
+- **platypus-server**: 7 tests ✅ (3 new message tests)
+- **platypus-cli**: 0 tests (CLI only)
 - **Total**: 60 tests passing (100% pass rate)
 
 ### Code Metrics
@@ -96,13 +96,13 @@ The Streamlit-to-Chatapp migration is progressing successfully. Phase 1 (Foundat
 
 ### Crate Structure
 ```
-chatapp/
+platypus/
 ├── crates/
-│   ├── chatapp-core/        # Core types, traits, state
-│   ├── chatapp-proto/       # Protocol Buffer definitions
-│   ├── chatapp-runtime/     # St API, execution engine
-│   ├── chatapp-server/      # Axum server, WebSocket, proto serialization
-│   └── chatapp-cli/         # Command-line interface
+│   ├── platypus-core/        # Core types, traits, state
+│   ├── platypus-proto/       # Protocol Buffer definitions
+│   ├── platypus-runtime/     # St API, execution engine
+│   ├── platypus-server/      # Axum server, WebSocket, proto serialization
+│   └── platypus-cli/         # Command-line interface
 ├── proto/                   # Proto source files
 ├── Cargo.toml              # Workspace manifest
 └── [Documentation files]

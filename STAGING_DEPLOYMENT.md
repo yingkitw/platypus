@@ -38,7 +38,7 @@ upstream staging_backend {
 
 server {
     listen 443 ssl http2;
-    server_name staging.chatapp.example.com;
+    server_name staging.platypus.example.com;
     
     ssl_certificate /etc/ssl/certs/staging.pem;
     ssl_certificate_key /etc/ssl/private/staging.key;
@@ -64,21 +64,21 @@ server {
 # Deploy backend to staging
 
 # 1. Build release
-cd /app/chatapp
+cd /app/platypus
 cargo build --release
 
 # 2. Stop current service
-systemctl stop chatapp-staging
+systemctl stop platypus-staging
 
 # 3. Deploy new version
-cp target/release/chatapp-cli /app/staging/
-cp -r crates/chatapp-proto/proto /app/staging/
+cp target/release/platypus-cli /app/staging/
+cp -r crates/platypus-proto/proto /app/staging/
 
 # 4. Update configuration
 cp config/staging.toml /app/staging/config.toml
 
 # 5. Start service
-systemctl start chatapp-staging
+systemctl start platypus-staging
 
 # 6. Verify
 sleep 5
@@ -91,11 +91,11 @@ curl -s http://localhost:8000/health | jq .
 # Deploy frontend to staging
 
 # 1. Build frontend
-cd /app/chatapp/frontend
+cd /app/platypus/frontend
 npm run build
 
 # 2. Deploy to staging S3
-aws s3 sync dist/ s3://chatapp-staging-frontend/ \
+aws s3 sync dist/ s3://platypus-staging-frontend/ \
   --delete \
   --cache-control "max-age=3600"
 
@@ -105,7 +105,7 @@ aws cloudfront create-invalidation \
   --paths "/*"
 
 # 4. Verify
-curl -I https://staging.chatapp.example.com/
+curl -I https://staging.platypus.example.com/
 ```
 
 ### 1.3 Configuration Management
@@ -114,8 +114,8 @@ curl -I https://staging.chatapp.example.com/
 ```bash
 # .env.staging
 NODE_ENV=staging
-REACT_APP_API_URL=https://staging-api.chatapp.example.com
-REACT_APP_WS_URL=wss://staging-api.chatapp.example.com/ws
+REACT_APP_API_URL=https://staging-api.platypus.example.com
+REACT_APP_WS_URL=wss://staging-api.platypus.example.com/ws
 LOG_LEVEL=debug
 ENABLE_PROFILING=true
 ENABLE_MONITORING=true
@@ -127,7 +127,7 @@ ENABLE_MONITORING=true
 ./scripts/migrate-db.sh staging
 
 # Verify migrations
-psql -h staging-db.internal -U chatapp -d chatapp_staging -c "\dt"
+psql -h staging-db.internal -U platypus -d platypus_staging -c "\dt"
 ```
 
 ---
@@ -144,7 +144,7 @@ global:
   evaluation_interval: 15s
 
 scrape_configs:
-  - job_name: 'chatapp-staging'
+  - job_name: 'platypus-staging'
     static_configs:
       - targets: ['localhost:9090']
     metrics_path: '/metrics'
@@ -219,14 +219,14 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /var/log/chatapp/*.log
+    - /var/log/platypus/*.log
   fields:
-    service: chatapp
+    service: platypus
     environment: staging
 
 output.elasticsearch:
   hosts: ["elasticsearch.internal:9200"]
-  index: "chatapp-staging-%{+yyyy.MM.dd}"
+  index: "platypus-staging-%{+yyyy.MM.dd}"
 ```
 
 ### 2.3 Alerting Setup
@@ -235,7 +235,7 @@ output.elasticsearch:
 ```yaml
 # alert-rules.yml
 groups:
-  - name: chatapp_staging
+  - name: platypus_staging
     rules:
       # High error rate
       - alert: HighErrorRate
@@ -267,7 +267,7 @@ groups:
           
       # Service down
       - alert: ServiceDown
-        expr: up{job="chatapp-staging"} == 0
+        expr: up{job="platypus-staging"} == 0
         for: 1m
         annotations:
           summary: "Chatapp service is down"
@@ -275,7 +275,7 @@ groups:
 
 #### Notification Channels
 ```
-- Slack: #chatapp-staging-alerts
+- Slack: #platypus-staging-alerts
 - Email: devops@example.com
 - PagerDuty: Chatapp Staging
 - SMS: Critical alerts only
