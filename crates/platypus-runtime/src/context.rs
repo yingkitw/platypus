@@ -641,6 +641,98 @@ impl St {
             .and_then(|v| v.as_string().map(|s| s.to_string()))
     }
 
+    /// Display a line chart.
+    pub fn line_chart(
+        &mut self,
+        data: impl Into<String>,
+        title: Option<String>,
+    ) -> ElementId {
+        let data = data.into();
+        self.delta_gen.add_element(
+            ElementType::LineChart { data, title },
+            self.current_container,
+        )
+    }
+
+    /// Display a bar chart.
+    pub fn bar_chart(
+        &mut self,
+        data: impl Into<String>,
+        title: Option<String>,
+    ) -> ElementId {
+        let data = data.into();
+        self.delta_gen.add_element(
+            ElementType::BarChart { data, title },
+            self.current_container,
+        )
+    }
+
+    /// Display an area chart.
+    pub fn area_chart(
+        &mut self,
+        data: impl Into<String>,
+        title: Option<String>,
+    ) -> ElementId {
+        let data = data.into();
+        self.delta_gen.add_element(
+            ElementType::AreaChart { data, title },
+            self.current_container,
+        )
+    }
+
+    /// Display a scatter chart.
+    pub fn scatter_chart(
+        &mut self,
+        data: impl Into<String>,
+        title: Option<String>,
+    ) -> ElementId {
+        let data = data.into();
+        self.delta_gen.add_element(
+            ElementType::ScatterChart { data, title },
+            self.current_container,
+        )
+    }
+
+    /// Display a pie chart.
+    pub fn pie_chart(
+        &mut self,
+        data: impl Into<String>,
+        title: Option<String>,
+    ) -> ElementId {
+        let data = data.into();
+        self.delta_gen.add_element(
+            ElementType::PieChart { data, title },
+            self.current_container,
+        )
+    }
+
+    /// Display a Plotly chart.
+    pub fn plotly_chart(&mut self, spec: impl Into<String>) -> ElementId {
+        let spec = spec.into();
+        self.delta_gen.add_element(
+            ElementType::PlotlyChart { spec },
+            self.current_container,
+        )
+    }
+
+    /// Display a Vega-Lite chart.
+    pub fn vega_lite_chart(&mut self, spec: impl Into<String>) -> ElementId {
+        let spec = spec.into();
+        self.delta_gen.add_element(
+            ElementType::VegaLiteChart { spec },
+            self.current_container,
+        )
+    }
+
+    /// Display a Bokeh chart.
+    pub fn bokeh_chart(&mut self, spec: impl Into<String>) -> ElementId {
+        let spec = spec.into();
+        self.delta_gen.add_element(
+            ElementType::BokehChart { spec },
+            self.current_container,
+        )
+    }
+
     /// Get all deltas.
     pub fn take_deltas(&self) -> Vec<platypus_core::state::Delta> {
         self.delta_gen.take_deltas()

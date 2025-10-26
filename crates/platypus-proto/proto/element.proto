@@ -46,6 +46,14 @@ message Element {
         TableElement table = 38;
         DividerElement divider = 39;
         EmptyElement empty = 40;
+        LineChartElement line_chart = 41;
+        BarChartElement bar_chart = 42;
+        AreaChartElement area_chart = 43;
+        ScatterChartElement scatter_chart = 44;
+        PieChartElement pie_chart = 45;
+        PlotlyChartElement plotly_chart = 46;
+        VegaLiteChartElement vega_lite_chart = 47;
+        BokehChartElement bokeh_chart = 48;
     }
 }
 
@@ -251,4 +259,41 @@ message DividerElement {
 }
 
 message EmptyElement {
+}
+
+message LineChartElement {
+    string data = 1;  // JSON-encoded chart data
+    string title = 2;
+}
+
+message BarChartElement {
+    string data = 1;  // JSON-encoded chart data
+    string title = 2;
+}
+
+message AreaChartElement {
+    string data = 1;  // JSON-encoded chart data
+    string title = 2;
+}
+
+message ScatterChartElement {
+    string data = 1;  // JSON-encoded chart data
+    string title = 2;
+}
+
+message PieChartElement {
+    string data = 1;  // JSON-encoded chart data
+    string title = 2;
+}
+
+message PlotlyChartElement {
+    string spec = 1;  // Plotly JSON specification
+}
+
+message VegaLiteChartElement {
+    string spec = 1;  // Vega-Lite JSON specification
+}
+
+message BokehChartElement {
+    string spec = 1;  // Bokeh JSON specification
 }

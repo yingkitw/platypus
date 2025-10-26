@@ -80,6 +80,16 @@ pub enum ElementType {
     Sidebar { children: Vec<ElementId> },
     Metric { label: String, value: String, delta: Option<String> },
 
+    // Charts
+    LineChart { data: String, title: Option<String> },
+    BarChart { data: String, title: Option<String> },
+    AreaChart { data: String, title: Option<String> },
+    ScatterChart { data: String, title: Option<String> },
+    PieChart { data: String, title: Option<String> },
+    PlotlyChart { spec: String },
+    VegaLiteChart { spec: String },
+    BokehChart { spec: String },
+
     // Other
     Empty,
     Divider,

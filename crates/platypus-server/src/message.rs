@@ -277,6 +277,51 @@ pub fn element_type_to_proto(id: u64, element: &ElementType) -> Element {
         ElementType::Empty => {
             element::Type::Empty(EmptyElement {})
         }
+        ElementType::LineChart { data, title } => {
+            element::Type::LineChart(LineChartElement {
+                data: data.clone(),
+                title: title.clone().unwrap_or_default(),
+            })
+        }
+        ElementType::BarChart { data, title } => {
+            element::Type::BarChart(BarChartElement {
+                data: data.clone(),
+                title: title.clone().unwrap_or_default(),
+            })
+        }
+        ElementType::AreaChart { data, title } => {
+            element::Type::AreaChart(AreaChartElement {
+                data: data.clone(),
+                title: title.clone().unwrap_or_default(),
+            })
+        }
+        ElementType::ScatterChart { data, title } => {
+            element::Type::ScatterChart(ScatterChartElement {
+                data: data.clone(),
+                title: title.clone().unwrap_or_default(),
+            })
+        }
+        ElementType::PieChart { data, title } => {
+            element::Type::PieChart(PieChartElement {
+                data: data.clone(),
+                title: title.clone().unwrap_or_default(),
+            })
+        }
+        ElementType::PlotlyChart { spec } => {
+            element::Type::PlotlyChart(PlotlyChartElement {
+                spec: spec.clone(),
+            })
+        }
+        ElementType::VegaLiteChart { spec } => {
+            element::Type::VegaLiteChart(VegaLiteChartElement {
+                spec: spec.clone(),
+            })
+        }
+        ElementType::BokehChart { spec } => {
+            element::Type::BokehChart(BokehChartElement {
+                spec: spec.clone(),
+            })
+        }
     };
 
     Element {
