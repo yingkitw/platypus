@@ -49,7 +49,7 @@ The Streamlit-to-Chatapp migration is progressing successfully. Phase 1 (Foundat
 - ✅ Protocol Buffer definitions (ForwardMsg, BackMsg, Element)
 - ✅ Runtime engine with St API (25+ methods)
 - ✅ Axum web server with WebSocket support
-- ✅ CLI tool (webag run, build, new, version)
+- ✅ CLI tool (platypus run, build, new, version)
 - ✅ 24 unit tests
 
 **Quality**: All tests passing, clean build

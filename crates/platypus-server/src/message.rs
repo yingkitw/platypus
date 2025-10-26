@@ -376,6 +376,360 @@ pub fn create_delta_msg(deltas: Vec<CoreDelta>) -> ForwardMsg {
     }
 }
 
+/// Convert deltas to JSON for frontend
+pub fn deltas_to_json(deltas: Vec<CoreDelta>) -> serde_json::Value {
+    let elements: Vec<serde_json::Value> = deltas
+        .into_iter()
+        .filter_map(|delta| match delta {
+            CoreDelta::AddElement {
+                id,
+                element,
+                parent_id,
+            } => {
+                Some(serde_json::json!({
+                    "type": "add_element",
+                    "id": id.inner().to_string(),
+                    "parent_id": parent_id.map(|p| p.to_string()),
+                    "element": element_to_json(&element),
+                }))
+            }
+            CoreDelta::UpdateElement { id, element } => {
+                Some(serde_json::json!({
+                    "type": "update_element",
+                    "id": id.inner().to_string(),
+                    "element": element_to_json(&element),
+                }))
+            }
+            CoreDelta::RemoveElement { id } => {
+                Some(serde_json::json!({
+                    "type": "remove_element",
+                    "id": id.inner().to_string(),
+                }))
+            }
+            CoreDelta::ClearContainer { id } => {
+                Some(serde_json::json!({
+                    "type": "clear_container",
+                    "id": id.inner().to_string(),
+                }))
+            }
+        })
+        .collect();
+
+    serde_json::json!({
+        "type": "delta",
+        "elements": elements,
+    })
+}
+
+/// Convert ElementType to JSON
+fn element_to_json(element: &ElementType) -> serde_json::Value {
+    match element {
+        ElementType::Text { value } => {
+            serde_json::json!({
+                "type": "text",
+                "value": value,
+            })
+        }
+        ElementType::Markdown { value } => {
+            serde_json::json!({
+                "type": "markdown",
+                "value": value,
+            })
+        }
+        ElementType::Code { value, language } => {
+            serde_json::json!({
+                "type": "code",
+                "value": value,
+                "language": language,
+            })
+        }
+        ElementType::Heading { value, level } => {
+            serde_json::json!({
+                "type": "heading",
+                "value": value,
+                "level": level,
+            })
+        }
+        ElementType::Button { label, key } => {
+            serde_json::json!({
+                "type": "button",
+                "label": label,
+                "key": key,
+            })
+        }
+        ElementType::TextInput { label, value, key } => {
+            serde_json::json!({
+                "type": "text_input",
+                "label": label,
+                "value": value,
+                "key": key,
+            })
+        }
+        ElementType::TextArea { label, value, key } => {
+            serde_json::json!({
+                "type": "text_area",
+                "label": label,
+                "value": value,
+                "key": key,
+            })
+        }
+        ElementType::NumberInput { label, value, key } => {
+            serde_json::json!({
+                "type": "number_input",
+                "label": label,
+                "value": value,
+                "key": key,
+            })
+        }
+        ElementType::Slider { label, value, min, max, key } => {
+            serde_json::json!({
+                "type": "slider",
+                "label": label,
+                "value": value,
+                "min": min,
+                "max": max,
+                "key": key,
+            })
+        }
+        ElementType::Checkbox { label, value, key } => {
+            serde_json::json!({
+                "type": "checkbox",
+                "label": label,
+                "value": value,
+                "key": key,
+            })
+        }
+        ElementType::Selectbox { label, options, value, key } => {
+            serde_json::json!({
+                "type": "selectbox",
+                "label": label,
+                "options": options,
+                "value": value,
+                "key": key,
+            })
+        }
+        ElementType::Multiselect { label, options, values, key } => {
+            serde_json::json!({
+                "type": "multiselect",
+                "label": label,
+                "options": options,
+                "values": values,
+                "key": key,
+            })
+        }
+        ElementType::Json { value } => {
+            serde_json::json!({
+                "type": "json",
+                "value": value,
+            })
+        }
+        ElementType::Image { src, caption, width } => {
+            serde_json::json!({
+                "type": "image",
+                "src": src,
+                "caption": caption,
+                "width": width,
+            })
+        }
+        ElementType::Divider => {
+            serde_json::json!({
+                "type": "divider",
+            })
+        }
+        ElementType::Empty => {
+            serde_json::json!({
+                "type": "empty",
+            })
+        }
+        ElementType::Success { message } => {
+            serde_json::json!({
+                "type": "success",
+                "message": message,
+            })
+        }
+        ElementType::Error { message } => {
+            serde_json::json!({
+                "type": "error",
+                "message": message,
+            })
+        }
+        ElementType::Warning { message } => {
+            serde_json::json!({
+                "type": "warning",
+                "message": message,
+            })
+        }
+        ElementType::Info { message } => {
+            serde_json::json!({
+                "type": "info",
+                "message": message,
+            })
+        }
+        ElementType::Metric { label, value, delta } => {
+            serde_json::json!({
+                "type": "metric",
+                "label": label,
+                "value": value,
+                "delta": delta,
+            })
+        }
+        ElementType::Progress { value } => {
+            serde_json::json!({
+                "type": "progress",
+                "value": value,
+            })
+        }
+        ElementType::Column { .. } => {
+            serde_json::json!({
+                "type": "column",
+            })
+        }
+        ElementType::Row { .. } => {
+            serde_json::json!({
+                "type": "row",
+            })
+        }
+        ElementType::Tab { .. } => {
+            serde_json::json!({
+                "type": "tab",
+            })
+        }
+        ElementType::Expander { .. } => {
+            serde_json::json!({
+                "type": "expander",
+            })
+        }
+        ElementType::Sidebar { .. } => {
+            serde_json::json!({
+                "type": "sidebar",
+            })
+        }
+        ElementType::Container { .. } => {
+            serde_json::json!({
+                "type": "container",
+            })
+        }
+        ElementType::Radio { label, options, value, key } => {
+            serde_json::json!({
+                "type": "radio",
+                "label": label,
+                "options": options,
+                "value": value,
+                "key": key,
+            })
+        }
+        ElementType::DateInput { label, value, key } => {
+            serde_json::json!({
+                "type": "date_input",
+                "label": label,
+                "value": value,
+                "key": key,
+            })
+        }
+        ElementType::TimeInput { label, value, key } => {
+            serde_json::json!({
+                "type": "time_input",
+                "label": label,
+                "value": value,
+                "key": key,
+            })
+        }
+        ElementType::ColorPicker { label, value, key } => {
+            serde_json::json!({
+                "type": "color_picker",
+                "label": label,
+                "value": value,
+                "key": key,
+            })
+        }
+        ElementType::FileUploader { label, key } => {
+            serde_json::json!({
+                "type": "file_uploader",
+                "label": label,
+                "key": key,
+            })
+        }
+        ElementType::Dataframe { data } => {
+            serde_json::json!({
+                "type": "dataframe",
+                "data": data,
+            })
+        }
+        ElementType::Table { headers, rows } => {
+            serde_json::json!({
+                "type": "table",
+                "headers": headers,
+                "rows": rows,
+            })
+        }
+        ElementType::CameraInput { label, key } => {
+            serde_json::json!({
+                "type": "camera_input",
+                "label": label,
+                "key": key,
+            })
+        }
+        ElementType::Audio { src } => {
+            serde_json::json!({
+                "type": "audio",
+                "src": src,
+            })
+        }
+        ElementType::Video { src } => {
+            serde_json::json!({
+                "type": "video",
+                "src": src,
+            })
+        }
+        ElementType::Tabs { tabs } => {
+            serde_json::json!({
+                "type": "tabs",
+                "tabs": tabs,
+            })
+        }
+        ElementType::LineChart { .. } => {
+            serde_json::json!({
+                "type": "line_chart",
+            })
+        }
+        ElementType::BarChart { .. } => {
+            serde_json::json!({
+                "type": "bar_chart",
+            })
+        }
+        ElementType::AreaChart { .. } => {
+            serde_json::json!({
+                "type": "area_chart",
+            })
+        }
+        ElementType::ScatterChart { .. } => {
+            serde_json::json!({
+                "type": "scatter_chart",
+            })
+        }
+        ElementType::PieChart { .. } => {
+            serde_json::json!({
+                "type": "pie_chart",
+            })
+        }
+        ElementType::PlotlyChart { .. } => {
+            serde_json::json!({
+                "type": "plotly_chart",
+            })
+        }
+        ElementType::VegaLiteChart { .. } => {
+            serde_json::json!({
+                "type": "vega_lite_chart",
+            })
+        }
+        ElementType::BokehChart { .. } => {
+            serde_json::json!({
+                "type": "bokeh_chart",
+            })
+        }
+    }
+}
+
 /// Create a NewSessionMsg
 pub fn create_session_msg(session_id: &str, script_hash: &str) -> ForwardMsg {
     ForwardMsg {

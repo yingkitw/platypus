@@ -1,9 +1,9 @@
-//! St context - Main API for building Webag applications.
+//! St context - Main API for building platypus applications.
 
 use platypus_core::element::{ElementId, ElementType};
 use platypus_core::state::DeltaGenerator;
 
-/// The main context for building Webag applications.
+/// The main context for building platypus applications.
 /// Provides an API similar to Streamlit's `st` module.
 pub struct St {
     delta_gen: DeltaGenerator,

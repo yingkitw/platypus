@@ -1,6 +1,6 @@
-//! Webag Runtime - App execution and state management.
+//! platypus Runtime - App execution and state management.
 //!
-//! This crate provides the runtime engine for executing Webag applications,
+//! This crate provides the runtime engine for executing platypus applications,
 //! managing state, handling events, and generating UI deltas.
 
 pub mod cache;

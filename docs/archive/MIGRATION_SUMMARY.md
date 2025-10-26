@@ -1,10 +1,10 @@
 # Streamlit → Rust Migration Summary
 
-## Project: Webag (Web App Generator)
+## Project: platypus (Web App Generator)
 
 ### Overview
 
-Webag is a high-performance Rust-based web app generator that migrates Streamlit's capabilities to Rust while maintaining API compatibility. The project successfully implements the core architecture needed to build interactive web applications with ease and speed.
+platypus is a high-performance Rust-based web app generator that migrates Streamlit's capabilities to Rust while maintaining API compatibility. The project successfully implements the core architecture needed to build interactive web applications with ease and speed.
 
 ## Completed Work
 
@@ -18,7 +18,7 @@ Webag is a high-performance Rust-based web app generator that migrates Streamlit
   - Edition 2021 Rust
   - Apache 2.0 license
 
-#### 2. Core Types & Traits (`webag-core`)
+#### 2. Core Types & Traits (`platypus-core`)
 - **Status**: ✅ Complete
 - **Implemented**:
   - `Element` trait and `ElementType` enum (20+ element types)
@@ -28,7 +28,7 @@ Webag is a high-performance Rust-based web app generator that migrates Streamlit
   - Error handling with custom error types
   - 24 unit tests (all passing)
 
-#### 3. Protocol Buffers (`webag-proto`)
+#### 3. Protocol Buffers (`platypus-proto`)
 - **Status**: ✅ Complete
 - **Defined**:
   - `Element.proto`: 20+ UI component types
@@ -36,7 +36,7 @@ Webag is a high-performance Rust-based web app generator that migrates Streamlit
   - `BackMsg.proto`: Browser → Server messages
   - Proto compilation pipeline with prost
 
-#### 4. Runtime Engine (`webag-runtime`)
+#### 4. Runtime Engine (`platypus-runtime`)
 - **Status**: ✅ Complete
 - **Implemented**:
   - `St` context API (Streamlit-compatible)
@@ -45,7 +45,7 @@ Webag is a high-performance Rust-based web app generator that migrates Streamlit
   - Event handling system
   - 12 unit tests (all passing)
 
-#### 5. Web Server (`webag-server`)
+#### 5. Web Server (`platypus-server`)
 - **Status**: ✅ Complete
 - **Implemented**:
   - Axum-based HTTP server
@@ -55,13 +55,13 @@ Webag is a high-performance Rust-based web app generator that migrates Streamlit
   - Error handling with proper HTTP responses
   - 8 unit tests (all passing)
 
-#### 6. CLI Tool (`webag-cli`)
+#### 6. CLI Tool (`platypus-cli`)
 - **Status**: ✅ Complete
 - **Commands**:
-  - `webag run <path>`: Run applications
-  - `webag build <path>`: Build for production
-  - `webag new <name>`: Create new projects
-  - `webag version`: Show version
+  - `platypus run <path>`: Run applications
+  - `platypus build <path>`: Build for production
+  - `platypus new <name>`: Create new projects
+  - `platypus version`: Show version
   - Verbose logging support
 
 #### 7. Frontend Foundation
@@ -100,11 +100,11 @@ Webag is a high-performance Rust-based web app generator that migrates Streamlit
 - Strong error types with thiserror
 
 ### Separation of Concerns
-- Core types isolated in `webag-core`
-- Proto definitions in `webag-proto`
-- Runtime logic in `webag-runtime`
-- Server implementation in `webag-server`
-- CLI in `webag-cli`
+- Core types isolated in `platypus-core`
+- Proto definitions in `platypus-proto`
+- Runtime logic in `platypus-runtime`
+- Server implementation in `platypus-server`
+- CLI in `platypus-cli`
 
 ## API Compatibility with Streamlit
 
@@ -160,13 +160,13 @@ st.container()
 ## File Structure
 
 ```
-webag/
+platypus/
 ├── crates/
-│   ├── webag-core/              # Core types (1,500 LOC)
-│   ├── webag-proto/             # Proto definitions (300 LOC)
-│   ├── webag-runtime/           # Runtime engine (1,200 LOC)
-│   ├── webag-server/            # Web server (800 LOC)
-│   └── webag-cli/               # CLI tool (200 LOC)
+│   ├── platypus-core/              # Core types (1,500 LOC)
+│   ├── platypus-proto/             # Proto definitions (300 LOC)
+│   ├── platypus-runtime/           # Runtime engine (1,200 LOC)
+│   ├── platypus-server/            # Web server (800 LOC)
+│   └── platypus-cli/               # CLI tool (200 LOC)
 ├── proto/                       # Proto source files
 ├── Cargo.toml                   # Workspace manifest
 ├── README.md                    # Project overview
@@ -241,9 +241,9 @@ webag/
 | CLI | Clap | 4.5 |
 | Testing | Insta | 1.39 |
 
-## Comparison: Streamlit vs Webag
+## Comparison: Streamlit vs platypus
 
-| Feature | Streamlit | Webag |
+| Feature | Streamlit | platypus |
 |---------|-----------|-------|
 | Language | Python | Rust |
 | Performance | Moderate | High |
@@ -258,8 +258,8 @@ webag/
 
 ```bash
 # Clone and setup
-git clone https://github.com/yingkitw/webag.git
-cd webag
+git clone https://github.com/yingkitw/platypus.git
+cd platypus
 
 # Build
 cargo build
@@ -268,7 +268,7 @@ cargo build
 cargo test
 
 # Run
-cargo run --bin webag -- run my_app.rs
+cargo run --bin platypus -- run my_app.rs
 
 # Format & Lint
 cargo fmt
@@ -287,11 +287,11 @@ The project follows these principles:
 
 ## License
 
-Webag is licensed under Apache 2.0, compatible with Streamlit's license.
+platypus is licensed under Apache 2.0, compatible with Streamlit's license.
 
 ## Conclusion
 
-Webag successfully demonstrates a production-ready Rust implementation of a Streamlit-compatible web app generator. The foundation is solid, with:
+platypus successfully demonstrates a production-ready Rust implementation of a Streamlit-compatible web app generator. The foundation is solid, with:
 
 - ✅ Modular architecture
 - ✅ Comprehensive type system

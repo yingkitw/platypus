@@ -1,11 +1,11 @@
-//! Error types for Webag.
+//! Error types for platypus.
 
 use thiserror::Error;
 
-/// Webag result type.
+/// platypus result type.
 pub type Result<T> = std::result::Result<T, Error>;
 
-/// Webag error type.
+/// platypus error type.
 #[derive(Error, Debug)]
 pub enum Error {
     #[error("Session not found: {0}")]

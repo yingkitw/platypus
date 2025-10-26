@@ -209,13 +209,13 @@ let value = st.text_input("Name", "default", Some("name_key"));
 ### New Files to Create
 
 ```
-crates/webag-core/src/
+crates/platypus-core/src/
 ├── sidebar.rs          # Sidebar implementation
 ├── tabs.rs             # Tabs implementation
 ├── expander.rs         # Expander implementation
 ├── form.rs             # Form validation
 
-crates/webag-runtime/src/
+crates/platypus-runtime/src/
 ├── sidebar_context.rs  # Sidebar St context
 ├── form_context.rs     # Form context
 ├── validation.rs       # Validation framework
@@ -230,11 +230,11 @@ tests/
 ### Modified Files
 
 ```
-crates/webag-core/src/
+crates/platypus-core/src/
 ├── element.rs          # Add new element types
 ├── lib.rs              # Export new types
 
-crates/webag-runtime/src/
+crates/platypus-runtime/src/
 ├── context.rs          # Add new St methods
 ├── lib.rs              # Export new modules
 ```

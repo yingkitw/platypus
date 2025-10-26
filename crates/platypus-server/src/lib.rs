@@ -1,6 +1,6 @@
-//! Webag Server - HTTP and WebSocket server for web apps.
+//! platypus Server - HTTP and WebSocket server for web apps.
 //!
-//! This crate provides the web server implementation for Webag applications,
+//! This crate provides the web server implementation for platypus applications,
 //! including HTTP endpoints and WebSocket support for real-time communication.
 
 pub mod config;

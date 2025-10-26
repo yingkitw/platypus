@@ -1,6 +1,18 @@
-# Platypus - Streamlit-Compatible Web Framework
+<img src="platypus.png" alt="Platypus Logo" width="200">
+
+# Platypus - Rust Native Data App Framework with Simplicity
 
 A high-performance Rust-based web framework that provides 100% API compatibility with Streamlit, designed for building interactive data applications with superior performance and developer experience.
+
+## Why Platypus?
+
+**Problem**: Streamlit is powerful for rapid prototyping but suffers from performance bottlenecks, lack of type safety, and limited scalability for production applications. Python's GIL and dynamic typing make it unsuitable for high-concurrency scenarios.
+
+**Solution**: Platypus brings Streamlit's simplicity to Rust—maintaining 100% API compatibility while delivering:
+- **Better performance** through compiled Rust and async I/O (no Python GIL)
+- **Type safety** preventing entire classes of runtime errors
+- **Predictable resource usage** with deterministic memory management
+- **Seamless migration** from Streamlit with zero code changes
 
 ## Overview
 
@@ -9,13 +21,42 @@ A high-performance Rust-based web framework that provides 100% API compatibility
 ### Key Features
 
 - **100% Streamlit API Compatibility**: All 48 core features implemented and tested
-- **High Performance**: 2x faster than Streamlit in most scenarios
-- **Type Safety**: Rust's type system prevents runtime errors
+- **Performance**: Compiled Rust eliminates Python GIL overhead; async I/O for concurrent requests
+- **Type Safety**: Rust's type system prevents entire classes of runtime errors
 - **Advanced Features**: Caching, multi-page apps, custom components, secrets management
 - **Real-time Interactivity**: WebSocket-based communication for instant feedback
 - **Modern UI**: Carbon Design System styling with React frontend
 - **Modular Architecture**: Trait-based design for extensibility
 - **Production Ready**: 309+ tests, 100% pass rate, zero hardcoded values
+
+## Comparison with Similar Frameworks
+
+| Feature | Platypus | Streamlit | Dash | Gradio | Shiny |
+|---------|----------|-----------|------|--------|-------|
+| **Language** | Rust | Python | Python | Python | R/Python |
+| **Type Safety** | ✅ Full | ❌ None | ⚠️ Partial | ❌ None | ⚠️ Partial |
+| **Learning Curve** | 🟢 Easy | 🟢 Easy | 🟡 Medium | 🟢 Easy | 🟡 Medium |
+| **API Compatibility** | 100% Streamlit | N/A | Different | Different | Different |
+| **Deployment** | Standalone binary | Python runtime | Python runtime | Python runtime | R runtime |
+| **Concurrency Model** | ✅ Async native | ❌ GIL-limited | ⚠️ Limited | ⚠️ Limited | ⚠️ Limited |
+| **Production Ready** | ✅ Yes | ⚠️ Partial | ✅ Yes | ⚠️ Partial | ✅ Yes |
+| **Customization** | ✅ High | ✅ High | ✅ Very High | ⚠️ Limited | ✅ High |
+
+### When to Use Platypus
+
+**Choose Platypus if you:**
+- Have existing Streamlit apps and want to migrate to a compiled language
+- Need type safety and compile-time error detection
+- Build data dashboards that handle concurrent user requests
+- Want a single compiled binary for deployment
+- Prefer Rust's memory safety guarantees
+
+**Consider alternatives if you:**
+- Rely heavily on Python's scientific ecosystem (NumPy, Pandas, scikit-learn integration)
+- Need maximum UI customization (Dash offers more flexibility)
+- Build complex interactive UIs (consider Dash or custom React)
+- Work primarily in R (Shiny is the better choice)
+- Prefer rapid prototyping without learning Rust
 
 ## Quick Start
 

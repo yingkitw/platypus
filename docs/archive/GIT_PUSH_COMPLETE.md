@@ -86,7 +86,7 @@ git push -u origin main
 ```
 fee46c9 (HEAD -> main, origin/main) Rename project: chatapp -> platypus
 590af5e feat: rename project to Chatapp and expand element support
-f56c599 Rename webag to chatapp: Update all crates, imports, and CLI
+f56c599 Rename platypus to chatapp: Update all crates, imports, and CLI
 ```
 
 ---

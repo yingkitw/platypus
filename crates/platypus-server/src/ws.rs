@@ -5,18 +5,19 @@ use futures::{SinkExt, StreamExt};
 use std::sync::Arc;
 use platypus_runtime::SessionStore;
 use crate::message;
-use crate::executor::ScriptExecutor;
+use crate::executor::{ScriptExecutor, AppFn};
 
 /// Handle WebSocket upgrade.
 pub async fn ws_handler(
     ws: WebSocketUpgrade,
     session_store: Arc<SessionStore>,
+    app_fn: Option<AppFn>,
 ) -> impl axum::response::IntoResponse {
-    ws.on_upgrade(|socket| handle_socket(socket, session_store))
+    ws.on_upgrade(move |socket| handle_socket(socket, session_store, app_fn))
 }
 
 /// Handle WebSocket connection.
-async fn handle_socket(socket: WebSocket, session_store: Arc<SessionStore>) {
+async fn handle_socket(socket: WebSocket, session_store: Arc<SessionStore>, app_fn: Option<AppFn>) {
     let (mut sender, mut receiver) = socket.split();
 
     // Create a new session
@@ -25,20 +26,18 @@ async fn handle_socket(socket: WebSocket, session_store: Arc<SessionStore>) {
     tracing::info!("WebSocket connection established: {}", session_id);
 
     // Create executor for script execution
-    let executor = ScriptExecutor::new(session_store.clone());
-
-    // Send initial session message using proto
-    let init_msg = message::create_session_msg(&session_id.to_string(), "");
-    if let Ok(bytes) = message::serialize_forward_msg(&init_msg) {
-        let _ = sender.send(Message::Binary(bytes)).await;
-    }
+    let executor = if let Some(app_fn) = app_fn {
+        ScriptExecutor::with_app(session_store.clone(), app_fn)
+    } else {
+        ScriptExecutor::new(session_store.clone())
+    };
 
     // Execute initial script and send deltas
     match executor.execute_script(session_id) {
         Ok(deltas) => {
-            let delta_msg = message::create_delta_msg(deltas);
-            if let Ok(bytes) = message::serialize_forward_msg(&delta_msg) {
-                let _ = sender.send(Message::Binary(bytes)).await;
+            let json_msg = message::deltas_to_json(deltas);
+            if let Ok(json_str) = serde_json::to_string(&json_msg) {
+                let _ = sender.send(Message::Text(json_str)).await;
             }
         }
         Err(e) => {
@@ -70,9 +69,9 @@ async fn handle_socket(socket: WebSocket, session_store: Arc<SessionStore>) {
                                         &widget_change.value,
                                     ) {
                                         Ok(deltas) => {
-                                            let delta_msg = message::create_delta_msg(deltas);
-                                            if let Ok(bytes) = message::serialize_forward_msg(&delta_msg) {
-                                                let _ = sender.send(Message::Binary(bytes)).await;
+                                            let json_msg = message::deltas_to_json(deltas);
+                                            if let Ok(json_str) = serde_json::to_string(&json_msg) {
+                                                let _ = sender.send(Message::Text(json_str)).await;
                                             }
                                         }
                                         Err(e) => {
@@ -86,9 +85,9 @@ async fn handle_socket(socket: WebSocket, session_store: Arc<SessionStore>) {
                                     // Rerun script
                                     match executor.execute_script(session_id) {
                                         Ok(deltas) => {
-                                            let delta_msg = message::create_delta_msg(deltas);
-                                            if let Ok(bytes) = message::serialize_forward_msg(&delta_msg) {
-                                                let _ = sender.send(Message::Binary(bytes)).await;
+                                            let json_msg = message::deltas_to_json(deltas);
+                                            if let Ok(json_str) = serde_json::to_string(&json_msg) {
+                                                let _ = sender.send(Message::Text(json_str)).await;
                                             }
                                         }
                                         Err(e) => {
@@ -109,7 +108,31 @@ async fn handle_socket(socket: WebSocket, session_store: Arc<SessionStore>) {
             }
             Ok(Message::Text(text)) => {
                 tracing::debug!("Received text message: {}", text);
-                // For backward compatibility, handle JSON messages
+                
+                // Parse JSON message from frontend
+                if let Ok(msg) = serde_json::from_str::<serde_json::Value>(&text) {
+                    if let Some("widget_change") = msg.get("type").and_then(|v| v.as_str()) {
+                        if let (Some(key), Some(value)) = (
+                            msg.get("key").and_then(|v| v.as_str()),
+                            msg.get("value")
+                        ) {
+                            tracing::debug!("Widget change: {} = {}", key, value);
+                            
+                            // Rerun script with widget change
+                            match executor.execute_script(session_id) {
+                                Ok(deltas) => {
+                                    let json_msg = message::deltas_to_json(deltas);
+                                    if let Ok(json_str) = serde_json::to_string(&json_msg) {
+                                        let _ = sender.send(Message::Text(json_str)).await;
+                                    }
+                                }
+                                Err(e) => {
+                                    tracing::error!("Script execution error: {}", e);
+                                }
+                            }
+                        }
+                    }
+                }
             }
             Ok(Message::Close(_)) => {
                 tracing::info!("WebSocket closed: {}", session_id);

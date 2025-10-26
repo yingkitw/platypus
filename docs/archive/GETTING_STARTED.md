@@ -1,8 +1,8 @@
-# Getting Started with Webag
+# Getting Started with platypus
 
 ## Overview
 
-Webag is a high-performance Rust-based web app generator that provides a Streamlit-compatible API. This guide will help you get up and running with Webag development.
+platypus is a high-performance Rust-based web app generator that provides a Streamlit-compatible API. This guide will help you get up and running with platypus development.
 
 ## Prerequisites
 
@@ -15,8 +15,8 @@ Webag is a high-performance Rust-based web app generator that provides a Streaml
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yingkitw/webag.git
-cd webag
+git clone https://github.com/yingkitw/platypus.git
+cd platypus
 ```
 
 ### Build the Project
@@ -26,11 +26,11 @@ cargo build
 ```
 
 This will compile all crates in the workspace:
-- `webag-core`: Core types and traits
-- `webag-proto`: Protocol Buffer definitions
-- `webag-runtime`: App runtime and state management
-- `webag-server`: Web server with WebSocket support
-- `webag-cli`: Command-line interface
+- `platypus-core`: Core types and traits
+- `platypus-proto`: Protocol Buffer definitions
+- `platypus-runtime`: App runtime and state management
+- `platypus-server`: Web server with WebSocket support
+- `platypus-cli`: Command-line interface
 
 ### Run Tests
 
@@ -41,13 +41,13 @@ cargo test
 ## Project Structure
 
 ```
-webag/
+platypus/
 ├── crates/
-│   ├── webag-core/          # Core types, traits, elements, widgets
-│   ├── webag-proto/         # Protocol Buffer definitions
-│   ├── webag-runtime/       # Runtime engine, St context, session management
-│   ├── webag-server/        # HTTP/WebSocket server, handlers
-│   └── webag-cli/           # CLI tool (webag run, build, new)
+│   ├── platypus-core/          # Core types, traits, elements, widgets
+│   ├── platypus-proto/         # Protocol Buffer definitions
+│   ├── platypus-runtime/       # Runtime engine, St context, session management
+│   ├── platypus-server/        # HTTP/WebSocket server, handlers
+│   └── platypus-cli/           # CLI tool (platypus run, build, new)
 ├── proto/                   # Proto source files
 ├── Cargo.toml              # Workspace manifest
 ├── README.md               # Project overview
@@ -61,22 +61,22 @@ webag/
 ### 1. Build the CLI
 
 ```bash
-cargo build --release --bin webag
+cargo build --release --bin platypus
 ```
 
-The binary will be at `target/release/webag`.
+The binary will be at `target/release/platypus`.
 
 ### 2. Create a Simple App
 
 Create `my_app.rs`:
 
 ```rust
-use webag::prelude::*;
+use platypus::prelude::*;
 
 fn main() {
     let mut st = St::new();
     
-    st.title("Hello Webag!");
+    st.title("Hello platypus!");
     st.write("Welcome to the web app generator");
     
     let name = st.text_input("Enter your name", "World", None);
@@ -91,7 +91,7 @@ fn main() {
 ### 3. Run the App
 
 ```bash
-./target/release/webag run my_app.rs
+./target/release/platypus run my_app.rs
 ```
 
 Visit `http://localhost:8501` in your browser.
@@ -111,7 +111,7 @@ The `St` type is the main API for building apps. It provides methods for:
 
 ### Elements
 
-Elements are UI components that can be displayed. They're defined in `webag-core::element::ElementType` and include:
+Elements are UI components that can be displayed. They're defined in `platypus-core::element::ElementType` and include:
 
 - Text elements: Text, Markdown, Code, Heading
 - Input widgets: Button, TextInput, Slider, Checkbox, etc.
@@ -141,54 +141,54 @@ Each user gets a session with:
 
 ### 1. Modify Core Types
 
-Edit files in `crates/webag-core/src/`:
+Edit files in `crates/platypus-core/src/`:
 
 ```bash
-cargo test -p webag-core
+cargo test -p platypus-core
 ```
 
 ### 2. Update Proto Definitions
 
-Edit `.proto` files in `crates/webag-proto/proto/`:
+Edit `.proto` files in `crates/platypus-proto/proto/`:
 
 ```bash
-cargo build -p webag-proto
+cargo build -p platypus-proto
 ```
 
 ### 3. Implement Runtime Features
 
-Edit files in `crates/webag-runtime/src/`:
+Edit files in `crates/platypus-runtime/src/`:
 
 ```bash
-cargo test -p webag-runtime
+cargo test -p platypus-runtime
 ```
 
 ### 4. Add Server Endpoints
 
-Edit files in `crates/webag-server/src/`:
+Edit files in `crates/platypus-server/src/`:
 
 ```bash
-cargo test -p webag-server
+cargo test -p platypus-server
 ```
 
 ### 5. Test the CLI
 
 ```bash
-cargo run --bin webag -- run my_app.rs
+cargo run --bin platypus -- run my_app.rs
 ```
 
 ## Common Tasks
 
 ### Add a New Element Type
 
-1. Define proto message in `crates/webag-proto/proto/element.proto`
-2. Add variant to `ElementType` enum in `crates/webag-core/src/element.rs`
-3. Add builder method to `St` in `crates/webag-runtime/src/context.rs`
+1. Define proto message in `crates/platypus-proto/proto/element.proto`
+2. Add variant to `ElementType` enum in `crates/platypus-core/src/element.rs`
+3. Add builder method to `St` in `crates/platypus-runtime/src/context.rs`
 4. Implement frontend component (React)
 
 ### Add a New Widget
 
-1. Define proto message in `crates/webag-proto/proto/element.proto`
+1. Define proto message in `crates/platypus-proto/proto/element.proto`
 2. Add variant to `ElementType` enum
 3. Implement `Widget` trait for state management
 4. Add method to `St` context
@@ -218,7 +218,7 @@ cargo test --test '*'
 ### Specific Test
 
 ```bash
-cargo test -p webag-core test_element_id
+cargo test -p platypus-core test_element_id
 ```
 
 ## Debugging
@@ -226,13 +226,13 @@ cargo test -p webag-core test_element_id
 ### Enable Logging
 
 ```bash
-RUST_LOG=debug cargo run --bin webag -- run my_app.rs
+RUST_LOG=debug cargo run --bin platypus -- run my_app.rs
 ```
 
 ### Run with Verbose Output
 
 ```bash
-cargo run --bin webag -- -v run my_app.rs
+cargo run --bin platypus -- -v run my_app.rs
 ```
 
 ## Performance
@@ -246,7 +246,7 @@ cargo build --release
 ### Profile Performance
 
 ```bash
-cargo flamegraph --bin webag
+cargo flamegraph --bin platypus
 ```
 
 ## Troubleshooting
@@ -267,7 +267,7 @@ cargo flamegraph --bin webag
 ### Proto Compilation Issues
 
 1. Ensure proto files are valid
-2. Run `cargo build -p webag-proto` explicitly
+2. Run `cargo build -p platypus-proto` explicitly
 3. Check for syntax errors in `.proto` files
 
 ## Next Steps
@@ -296,4 +296,4 @@ See CONTRIBUTING.md for guidelines on:
 
 ## License
 
-Webag is licensed under Apache 2.0. See LICENSE file for details.
+platypus is licensed under Apache 2.0. See LICENSE file for details.

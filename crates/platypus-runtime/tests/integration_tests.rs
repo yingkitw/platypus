@@ -279,7 +279,7 @@ fn test_widget_state_persistence() {
 
 #[test]
 fn test_streamlit_api_compatibility() {
-    // This test verifies that Webag provides a Streamlit-compatible API
+    // This test verifies that platypus provides a Streamlit-compatible API
     let mut st = St::new();
     
     // Streamlit-like workflow

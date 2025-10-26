@@ -15,7 +15,7 @@ Found hardcoded values in:
 - **Endpoint Paths**: "/health", "/api/info", "/", "/ws"
 - **CLI Configuration**: Output directory ("dist"), Template ("basic")
 - **Logging Levels**: "debug", "info"
-- **Application Names**: "Webag App", "Chatapp"
+- **Application Names**: "platypus App", "Chatapp"
 
 ### Phase 2: Created Configuration Module ✅
 
@@ -107,7 +107,7 @@ Router::new()
 
 // cli/main.rs
 let config = ServerConfig {
-    app_name: "Webag App".to_string(),
+    app_name: "platypus App".to_string(),
     host: "127.0.0.1".to_string(),
     port: 8501,
     max_body_size: 100 * 1024 * 1024,

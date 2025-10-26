@@ -1,4 +1,4 @@
-# Webag Phase 1 Completion Checklist
+# platypus Phase 1 Completion Checklist
 
 ## ✅ Project Initialization
 
@@ -8,7 +8,7 @@
 - [x] Add Apache 2.0 license
 - [x] Initialize git repository
 
-## ✅ Core Crate (webag-core)
+## ✅ Core Crate (platypus-core)
 
 ### Types & Traits
 - [x] `ElementId` - Unique element identifier
@@ -35,7 +35,7 @@
 - [x] Delta generator tests
 - [x] Widget state tests
 
-## ✅ Proto Crate (webag-proto)
+## ✅ Proto Crate (platypus-proto)
 
 ### Proto Definitions
 - [x] `element.proto` - 20+ element message types
@@ -50,7 +50,7 @@
 - [x] BackMsg types (WidgetChange, Rerun, Interaction)
 - [x] Delta types (Add, Update, Remove, Clear)
 
-## ✅ Runtime Crate (webag-runtime)
+## ✅ Runtime Crate (platypus-runtime)
 
 ### St Context API
 - [x] `St` struct - Main API context
@@ -81,7 +81,7 @@
 - [x] Delta generation tests
 - [x] Widget state tests
 
-## ✅ Server Crate (webag-server)
+## ✅ Server Crate (platypus-server)
 
 ### HTTP Server
 - [x] `AppServer` - Main server implementation
@@ -109,13 +109,13 @@
 - [x] WebSocket client
 - [x] Message handling
 
-## ✅ CLI Crate (webag-cli)
+## ✅ CLI Crate (platypus-cli)
 
 ### Commands
-- [x] `webag run` - Run applications
-- [x] `webag build` - Build for production
-- [x] `webag new` - Create new projects
-- [x] `webag version` - Show version
+- [x] `platypus run` - Run applications
+- [x] `platypus build` - Build for production
+- [x] `platypus new` - Create new projects
+- [x] `platypus version` - Show version
 
 ### Features
 - [x] Argument parsing with Clap
@@ -152,9 +152,9 @@
 
 ### Test Status
 - [x] `cargo test` - All tests pass (24 tests)
-- [x] webag-core tests - 12 passing
-- [x] webag-runtime tests - 8 passing
-- [x] webag-server tests - 4 passing
+- [x] platypus-core tests - 12 passing
+- [x] platypus-runtime tests - 8 passing
+- [x] platypus-server tests - 4 passing
 - [x] No test failures
 - [x] 100% test pass rate
 
@@ -171,7 +171,7 @@
 - [x] Workspace root with Cargo.toml
 - [x] 5 crates in crates/ directory
 - [x] Proto files in proto/ directory
-- [x] Frontend files in crates/webag-server/frontend/
+- [x] Frontend files in crates/platypus-server/frontend/
 - [x] Documentation files in root
 - [x] License file included
 

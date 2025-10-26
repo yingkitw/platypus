@@ -2,6 +2,7 @@
 
 use crate::config;
 use crate::error::Result;
+use crate::executor::AppFn;
 use crate::handler;
 use crate::ws;
 use axum::{
@@ -52,12 +53,15 @@ pub struct ServerState {
     pub session_store: Arc<SessionStore>,
     /// Server start time.
     pub start_time: Instant,
+    /// App function.
+    pub app_fn: Option<AppFn>,
 }
 
 /// Main application server.
 pub struct AppServer {
     config: ServerConfig,
     session_store: Arc<SessionStore>,
+    app_fn: Option<AppFn>,
 }
 
 impl AppServer {
@@ -66,6 +70,7 @@ impl AppServer {
         AppServer {
             config: ServerConfig::default(),
             session_store: Arc::new(SessionStore::new()),
+            app_fn: None,
         }
     }
 
@@ -74,6 +79,25 @@ impl AppServer {
         AppServer {
             config,
             session_store: Arc::new(SessionStore::new()),
+            app_fn: None,
+        }
+    }
+
+    /// Create a new server with app function.
+    pub fn with_app(app_fn: AppFn) -> Self {
+        AppServer {
+            config: ServerConfig::default(),
+            session_store: Arc::new(SessionStore::new()),
+            app_fn: Some(app_fn),
+        }
+    }
+
+    /// Create a new server with custom config and app function.
+    pub fn with_config_and_app(config: ServerConfig, app_fn: AppFn) -> Self {
+        AppServer {
+            config,
+            session_store: Arc::new(SessionStore::new()),
+            app_fn: Some(app_fn),
         }
     }
 
@@ -93,9 +117,11 @@ impl AppServer {
             config: self.config.clone(),
             session_store: Arc::clone(&self.session_store),
             start_time: Instant::now(),
+            app_fn: self.app_fn,
         });
 
         let session_store = Arc::clone(&self.session_store);
+        let app_fn = self.app_fn;
 
         Router::new()
             // Health check
@@ -107,7 +133,7 @@ impl AppServer {
             // WebSocket endpoint
             .route(
                 config::WEBSOCKET_PATH,
-                get(move |ws| ws::ws_handler(ws, Arc::clone(&session_store))),
+                get(move |ws| ws::ws_handler(ws, Arc::clone(&session_store), app_fn)),
             )
             .layer(DefaultBodyLimit::max(config::max_body_size_usize()))
             .layer(CorsLayer::permissive())
@@ -124,7 +150,7 @@ impl AppServer {
         let router = self.build_router();
 
         tracing::info!(
-            "Starting Webag server on http://{}:{}",
+            "Starting platypus server on http://{}:{}",
             self.config.host,
             self.config.port
         );

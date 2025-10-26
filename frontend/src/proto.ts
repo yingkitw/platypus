@@ -37,7 +37,7 @@ function getMessageType(name: string): protobufjs.Type {
  * Deserialize ForwardMsg from bytes
  */
 export function deserializeForwardMsg(bytes: Uint8Array): any {
-  const ForwardMsg = getMessageType('webag.ForwardMsg');
+  const ForwardMsg = getMessageType('platypus.ForwardMsg');
   return ForwardMsg.decode(bytes);
 }
 
@@ -45,7 +45,7 @@ export function deserializeForwardMsg(bytes: Uint8Array): any {
  * Serialize BackMsg to bytes
  */
 export function serializeBackMsg(msg: any): Uint8Array {
-  const BackMsg = getMessageType('webag.BackMsg');
+  const BackMsg = getMessageType('platypus.BackMsg');
   const errMsg = BackMsg.verify(msg);
   if (errMsg) {
     throw new Error(`BackMsg verification failed: ${errMsg}`);

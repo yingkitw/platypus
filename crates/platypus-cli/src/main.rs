@@ -126,16 +126,16 @@ async fn run_app(
     Ok(())
 }
 
-/// Build a Webag application for production.
+/// Build a platypus application for production.
 fn build_app(_path: PathBuf, _output: PathBuf) -> anyhow::Result<()> {
-    println!("Building Webag application...");
+    println!("Building platypus application...");
     println!("✓ Build complete!");
     Ok(())
 }
 
-/// Create a new Webag project.
+/// Create a new platypus project.
 fn create_project(name: String, template: String) -> anyhow::Result<()> {
-    println!("Creating new Webag project: {}", name);
+    println!("Creating new platypus project: {}", name);
     println!("Template: {}", template);
     println!("✓ Project created!");
     Ok(())

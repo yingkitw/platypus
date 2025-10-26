@@ -40,9 +40,9 @@
 ```
 Total Tests: 51
 ├── Unit Tests: 24 (Phase 1)
-│   ├── webag-core: 12 tests
-│   ├── webag-runtime: 8 tests
-│   └── webag-server: 4 tests
+│   ├── platypus-core: 12 tests
+│   ├── platypus-runtime: 8 tests
+│   └── platypus-server: 4 tests
 └── Integration Tests: 27 (Phase 2)
     ├── Display elements: 7 tests
     ├── Input widgets: 8 tests

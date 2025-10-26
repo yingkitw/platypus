@@ -5,6 +5,7 @@ members = [
     "crates/platypus-runtime",
     "crates/platypus-server",
     "crates/platypus-cli",
+    "examples",
 ]
 resolver = "2"
 
@@ -13,6 +14,11 @@ version = "0.1.0"
 edition = "2024"
 license = "Apache-2.0"
 repository = "https://github.com/yingkitw/platypus"
+documentation = "https://github.com/yingkitw/platypus/blob/main/README.md"
+description = "A Rust-native data app framework with Streamlit-compatible API for building interactive data applications"
+keywords = ["web", "framework", "streamlit", "data-apps", "rust"]
+authors = ["Platypus Contributors"]
+homepage = "https://github.com/yingkitw/platypus"
 
 [workspace.dependencies]
 tokio = { version = "1.40", features = ["full"] }

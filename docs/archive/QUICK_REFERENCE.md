@@ -1,4 +1,4 @@
-# Webag Quick Reference
+# platypus Quick Reference
 
 ## Build Commands
 
@@ -10,13 +10,13 @@ cargo build
 cargo build --release
 
 # Build specific crate
-cargo build -p webag-core
+cargo build -p platypus-core
 
 # Run tests
 cargo test
 
 # Run tests for specific crate
-cargo test -p webag-runtime
+cargo test -p platypus-runtime
 
 # Format code
 cargo fmt
@@ -29,16 +29,16 @@ cargo clippy
 
 ```bash
 # Run an app
-webag run app.rs
+platypus run app.rs
 
 # Build for production
-webag build app.rs --output dist
+platypus build app.rs --output dist
 
 # Create new project
-webag new my_project --template basic
+platypus new my_project --template basic
 
 # Show version
-webag version
+platypus version
 ```
 
 ## St API Reference
@@ -195,9 +195,9 @@ UserInteractionMsg               // Custom interaction
 ## File Structure
 
 ```
-webag/
+platypus/
 ├── crates/
-│   ├── webag-core/
+│   ├── platypus-core/
 │   │   └── src/
 │   │       ├── lib.rs
 │   │       ├── element.rs       # Element types
@@ -205,7 +205,7 @@ webag/
 │   │       ├── session.rs       # Session management
 │   │       ├── state.rs         # State and deltas
 │   │       └── error.rs         # Error types
-│   ├── webag-proto/
+│   ├── platypus-proto/
 │   │   ├── src/
 │   │   │   └── lib.rs
 │   │   ├── proto/
@@ -213,14 +213,14 @@ webag/
 │   │   │   ├── forward_msg.proto
 │   │   │   └── back_msg.proto
 │   │   └── build.rs
-│   ├── webag-runtime/
+│   ├── platypus-runtime/
 │   │   └── src/
 │   │       ├── lib.rs
 │   │       ├── context.rs       # St API
 │   │       ├── event.rs         # Event types
 │   │       ├── session_store.rs # Session storage
 │   │       └── error.rs
-│   ├── webag-server/
+│   ├── platypus-server/
 │   │   ├── src/
 │   │   │   ├── lib.rs
 │   │   │   ├── server.rs        # Main server
@@ -229,7 +229,7 @@ webag/
 │   │   │   └── error.rs
 │   │   └── frontend/
 │   │       └── index.html
-│   └── webag-cli/
+│   └── platypus-cli/
 │       └── src/
 │           └── main.rs
 ├── proto/                       # Proto source files
@@ -246,7 +246,7 @@ webag/
 ### Simple Display App
 
 ```rust
-use webag::prelude::*;
+use platypus::prelude::*;
 
 fn main() {
     let mut st = St::new();
@@ -258,7 +258,7 @@ fn main() {
 ### Interactive App
 
 ```rust
-use webag::prelude::*;
+use platypus::prelude::*;
 
 fn main() {
     let mut st = St::new();
@@ -274,7 +274,7 @@ fn main() {
 ### Multi-Column Layout
 
 ```rust
-use webag::prelude::*;
+use platypus::prelude::*;
 
 fn main() {
     let mut st = St::new();
@@ -289,10 +289,10 @@ fn main() {
 
 ```bash
 # Enable debug logging
-RUST_LOG=debug cargo run --bin webag -- run app.rs
+RUST_LOG=debug cargo run --bin platypus -- run app.rs
 
 # Verbose CLI output
-cargo run --bin webag -- -v run app.rs
+cargo run --bin platypus -- -v run app.rs
 
 # Run tests with output
 cargo test -- --nocapture

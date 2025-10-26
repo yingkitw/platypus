@@ -1,8 +1,8 @@
-# Webag Documentation Index
+# platypus Documentation Index
 
 ## 📚 Documentation Guide
 
-Start here to navigate the Webag project documentation.
+Start here to navigate the platypus project documentation.
 
 ### Quick Links
 
@@ -21,7 +21,7 @@ Start here to navigate the Webag project documentation.
 1. Read [README.md](README.md) for project overview
 2. Follow [GETTING_STARTED.md](GETTING_STARTED.md) for setup
 3. Check [QUICK_REFERENCE.md](QUICK_REFERENCE.md) for API basics
-4. Run your first app: `cargo run --bin webag -- run app.rs`
+4. Run your first app: `cargo run --bin platypus -- run app.rs`
 
 ### For Developers
 
@@ -41,7 +41,7 @@ Start here to navigate the Webag project documentation.
 ## 📖 Documentation by Topic
 
 ### Project Overview
-- [README.md](README.md) - What is Webag?
+- [README.md](README.md) - What is platypus?
 - [MIGRATION_SUMMARY.md](MIGRATION_SUMMARY.md) - Streamlit migration details
 - [LICENSE](LICENSE) - Apache 2.0 license
 
@@ -63,13 +63,13 @@ Start here to navigate the Webag project documentation.
 ## 🏗️ Project Structure
 
 ```
-webag/
+platypus/
 ├── crates/
-│   ├── webag-core/          # Core types and traits
-│   ├── webag-proto/         # Protocol Buffer definitions
-│   ├── webag-runtime/       # Runtime engine and St API
-│   ├── webag-server/        # Web server and handlers
-│   └── webag-cli/           # Command-line interface
+│   ├── platypus-core/          # Core types and traits
+│   ├── platypus-proto/         # Protocol Buffer definitions
+│   ├── platypus-runtime/       # Runtime engine and St API
+│   ├── platypus-server/        # Web server and handlers
+│   └── platypus-cli/           # Command-line interface
 ├── proto/                   # Proto source files
 ├── Cargo.toml              # Workspace manifest
 ├── README.md               # Project overview
@@ -94,7 +94,7 @@ cargo clippy            # Lint code
 
 ### Development
 ```bash
-cargo run --bin webag -- run app.rs    # Run app
+cargo run --bin platypus -- run app.rs    # Run app
 RUST_LOG=debug cargo build             # Debug build
 cargo doc --open                       # View docs
 ```
@@ -107,27 +107,27 @@ cargo test --release    # Test release build
 
 ## 📚 Crate Documentation
 
-### webag-core
+### platypus-core
 **Purpose**: Core types and traits  
 **Key Types**: `Element`, `Widget`, `Session`, `DeltaGenerator`  
 **Documentation**: See [ARCHITECTURE.md](ARCHITECTURE.md) - Core Layer
 
-### webag-proto
+### platypus-proto
 **Purpose**: Protocol Buffer definitions  
 **Key Messages**: `ForwardMsg`, `BackMsg`, `Element`, `Delta`  
 **Documentation**: See [ARCHITECTURE.md](ARCHITECTURE.md) - Proto Layer
 
-### webag-runtime
+### platypus-runtime
 **Purpose**: App runtime and state management  
 **Key Types**: `St`, `SessionStore`, `Event`  
 **Documentation**: See [QUICK_REFERENCE.md](QUICK_REFERENCE.md) - St API Reference
 
-### webag-server
+### platypus-server
 **Purpose**: Web server with WebSocket support  
 **Key Types**: `AppServer`, `ServerConfig`  
 **Documentation**: See [ARCHITECTURE.md](ARCHITECTURE.md) - Server Layer
 
-### webag-cli
+### platypus-cli
 **Purpose**: Command-line interface  
 **Commands**: `run`, `build`, `new`, `version`  
 **Documentation**: See [GETTING_STARTED.md](GETTING_STARTED.md) - CLI Commands
@@ -181,7 +181,7 @@ See [GETTING_STARTED.md](GETTING_STARTED.md) - Development Workflow.
 
 ## 📝 License
 
-Webag is licensed under Apache 2.0. See [LICENSE](LICENSE) for details.
+platypus is licensed under Apache 2.0. See [LICENSE](LICENSE) for details.
 
 ---
 

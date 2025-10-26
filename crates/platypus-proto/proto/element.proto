@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package webag;
+package platypus;
 
-// Element types supported by Webag
+// Element types supported by platypus
 message Element {
     string id = 1;
     

@@ -1,0 +1,29 @@
+[package]
+name = "platypus-examples"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+
+[[bin]]
+name = "hello_world"
+path = "hello_world.rs"
+
+[[bin]]
+name = "calculator"
+path = "calculator.rs"
+
+[[bin]]
+name = "data_explorer"
+path = "data_explorer.rs"
+
+[[bin]]
+name = "form_example"
+path = "form_example.rs"
+
+[dependencies]
+platypus-runtime = { path = "../crates/platypus-runtime" }
+platypus-server = { path = "../crates/platypus-server" }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }

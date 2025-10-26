@@ -67,7 +67,7 @@ Key responsibilities:
 - Delta generation for efficient updates
 - Event routing and handling
 
-### 4. Server Layer (`webag-server`)
+### 4. Server Layer (`platypus-server`)
 
 HTTP and WebSocket server:
 
@@ -83,14 +83,14 @@ Endpoints:
 - `GET /assets/*`: Static assets (CSS, JS, etc.)
 - `POST /api/*`: API endpoints
 
-### 5. CLI Layer (`webag-cli`)
+### 5. CLI Layer (`platypus-cli`)
 
 Command-line interface:
 
-- `webag run <script>`: Run an app
-- `webag build <script>`: Build for production
-- `webag new <name>`: Create new project
-- `webag dev`: Development server with hot reload
+- `platypus run <script>`: Run an app
+- `platypus build <script>`: Build for production
+- `platypus new <name>`: Create new project
+- `platypus dev`: Development server with hot reload
 
 ## Data Flow
 
@@ -198,9 +198,9 @@ BackMsg {
 
 ### Adding New Elements
 
-1. Define proto message in `webag-proto/proto/`
+1. Define proto message in `platypus-proto/proto/`
 2. Add to `Element` oneof in `Element.proto`
-3. Implement `Element` trait in `webag-core`
+3. Implement `Element` trait in `platypus-core`
 4. Add rendering logic in frontend
 5. Add builder method to `St` API
 

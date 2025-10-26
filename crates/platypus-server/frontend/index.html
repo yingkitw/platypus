@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webag - Web App Generator</title>
+    <title>platypus - Web App Generator</title>
     <style>
         * {
             margin: 0;
@@ -198,7 +198,7 @@
 <body>
     <header>
         <div class="container">
-            <h1>🚀 Webag</h1>
+            <h1>🚀 platypus</h1>
             <p>Web App Generator - Built with Rust</p>
         </div>
     </header>
@@ -221,6 +221,7 @@
 
         const statusEl = document.getElementById('status');
         const appEl = document.getElementById('app');
+        let elements = {}; // Store rendered elements by ID
 
         ws.onopen = () => {
             statusEl.className = 'status connected';
@@ -233,13 +234,202 @@
                 const message = JSON.parse(event.data);
                 console.log('Received message:', message);
                 
-                if (message.type === 'session_init') {
-                    console.log('Session initialized:', message.session_id);
+                if (message.type === 'delta') {
+                    renderElements(message.elements);
                 }
             } catch (e) {
                 console.error('Failed to parse message:', e);
             }
         };
+
+        function renderElements(elements) {
+            appEl.innerHTML = '';
+            
+            elements.forEach(delta => {
+                if (delta.type === 'add_element') {
+                    const el = renderElement(delta.element);
+                    if (el) {
+                        appEl.appendChild(el);
+                    }
+                }
+            });
+        }
+
+        function renderElement(element) {
+            const div = document.createElement('div');
+            div.className = 'element';
+            
+            switch (element.type) {
+                case 'text':
+                    div.textContent = element.value;
+                    div.className += ' text';
+                    return div;
+                    
+                case 'markdown':
+                    div.innerHTML = markdownToHtml(element.value);
+                    return div;
+                    
+                case 'heading':
+                    div.className += ` heading heading-${element.level}`;
+                    div.textContent = element.value;
+                    return div;
+                    
+                case 'button':
+                    const btn = document.createElement('button');
+                    btn.textContent = element.label;
+                    btn.onclick = () => console.log('Button clicked:', element.key);
+                    return btn;
+                    
+                case 'text_input':
+                    const label1 = document.createElement('label');
+                    label1.textContent = element.label;
+                    const input1 = document.createElement('input');
+                    input1.type = 'text';
+                    input1.value = element.value || '';
+                    const group1 = document.createElement('div');
+                    group1.className = 'form-group';
+                    group1.appendChild(label1);
+                    group1.appendChild(input1);
+                    return group1;
+                    
+                case 'number_input':
+                    const label2 = document.createElement('label');
+                    label2.textContent = element.label;
+                    const input2 = document.createElement('input');
+                    input2.type = 'number';
+                    const storedValue = widgetValues[element.key];
+                    input2.value = storedValue !== undefined ? storedValue : (element.value || 0);
+                    updateWidgetValue(element.key, input2.value);
+                    input2.onchange = () => {
+                        // Send widget change event to server
+                        sendWidgetChange(element.key, input2.value);
+                    };
+                    const group2 = document.createElement('div');
+                    group2.className = 'form-group';
+                    group2.appendChild(label2);
+                    group2.appendChild(input2);
+                    return group2;
+                    
+                case 'checkbox':
+                    const label3 = document.createElement('label');
+                    const input3 = document.createElement('input');
+                    input3.type = 'checkbox';
+                    input3.checked = element.value || false;
+                    label3.appendChild(input3);
+                    label3.appendChild(document.createTextNode(' ' + element.label));
+                    const group3 = document.createElement('div');
+                    group3.className = 'form-group';
+                    group3.appendChild(label3);
+                    return group3;
+                    
+                case 'selectbox':
+                    const label4 = document.createElement('label');
+                    label4.textContent = element.label;
+                    const select = document.createElement('select');
+                    element.options.forEach(opt => {
+                        const option = document.createElement('option');
+                        option.value = opt;
+                        option.textContent = opt;
+                        select.appendChild(option);
+                    });
+                    const storedSelectValue = widgetValues[element.key];
+                    if (storedSelectValue !== undefined) {
+                        select.value = storedSelectValue;
+                    }
+                    updateWidgetValue(element.key, select.value);
+                    select.onchange = () => {
+                        sendWidgetChange(element.key, select.value);
+                    };
+                    const group4 = document.createElement('div');
+                    group4.className = 'form-group';
+                    group4.appendChild(label4);
+                    group4.appendChild(select);
+                    return group4;
+                    
+                case 'divider':
+                    const hr = document.createElement('hr');
+                    return hr;
+                    
+                case 'success':
+                    div.className += ' alert alert-success';
+                    div.textContent = element.message;
+                    return div;
+                    
+                case 'error':
+                    div.className += ' alert alert-error';
+                    div.textContent = element.message;
+                    return div;
+                    
+                case 'warning':
+                    div.className += ' alert alert-warning';
+                    div.textContent = element.message;
+                    return div;
+                    
+                case 'info':
+                    div.className += ' alert alert-info';
+                    div.textContent = element.message;
+                    return div;
+                    
+                case 'metric':
+                    div.innerHTML = `<strong>${element.label}:</strong> ${element.value}`;
+                    return div;
+                    
+                case 'code':
+                    const pre = document.createElement('pre');
+                    const code = document.createElement('code');
+                    code.textContent = element.value;
+                    pre.appendChild(code);
+                    return pre;
+                    
+                default:
+                    div.textContent = `[${element.type}]`;
+                    return div;
+            }
+        }
+
+        // Store all widget values
+        const widgetValues = {};
+
+        function updateWidgetValue(key, value) {
+            widgetValues[key] = value;
+            console.log('Updated widget value:', key, value);
+        }
+
+        function sendWidgetChange(key, value) {
+            if (!key || !ws || ws.readyState !== WebSocket.OPEN) {
+                return;
+            }
+            
+            // Update local widget value
+            updateWidgetValue(key, value);
+            
+            // Send widget change event to server with all current values
+            const message = {
+                type: 'widget_change',
+                key: key,
+                value: value,
+                all_values: widgetValues
+            };
+            
+            try {
+                ws.send(JSON.stringify(message));
+                console.log('Sent widget change:', key, value);
+            } catch (e) {
+                console.error('Failed to send widget change:', e);
+            }
+        }
+
+        function markdownToHtml(markdown) {
+            // Simple markdown to HTML conversion
+            let html = markdown
+                .replace(/^### (.*?)$/gm, '<h3>$1</h3>')
+                .replace(/^## (.*?)$/gm, '<h2>$1</h2>')
+                .replace(/^# (.*?)$/gm, '<h1>$1</h1>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n/g, '<br>');
+            return html;
+        }
 
         ws.onerror = (error) => {
             statusEl.className = 'status disconnected';
@@ -255,13 +445,11 @@
 
         // Render initial content
         appEl.innerHTML = `
-            <div class="element heading heading-1">Welcome to Webag</div>
+            <div class="element heading heading-1">Welcome to platypus</div>
             <div class="element text">
-                Webag is a high-performance web app generator built with Rust.
-                It provides a Streamlit-compatible API for building interactive web applications.
-            </div>
-            <div class="element">
-                <button onclick="alert('Button clicked!')">Click Me</button>
+                <p>platypus is a high-performance web app generator built with Rust.</p>
+                <p>It provides a Streamlit-compatible API for building interactive web applications.</p>
+                <p>Connecting to app...</p>
             </div>
         `;
     </script>
