@@ -20,18 +20,18 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Run a Chatapp application
+    /// Run a Platypus application
     Run {
         /// Path to the app script or directory
         #[arg(value_name = "PATH")]
         path: PathBuf,
 
         /// Port to listen on
-        #[arg(short, long, default_value = "8501")]
+        #[arg(short, long, default_value_t = platypus_server::config::DEFAULT_PORT)]
         port: u16,
 
         /// Host to bind to
-        #[arg(short, long, default_value = "127.0.0.1")]
+        #[arg(short, long, default_value = platypus_server::config::DEFAULT_HOST)]
         host: String,
 
         /// Enable hot reload
@@ -39,25 +39,25 @@ enum Commands {
         hot_reload: bool,
     },
 
-    /// Build a Chatapp application for production
+    /// Build a Platypus application for production
     Build {
         /// Path to the app script or directory
         #[arg(value_name = "PATH")]
         path: PathBuf,
 
         /// Output directory
-        #[arg(short, long, default_value = "dist")]
+        #[arg(short, long, default_value = platypus_server::config::DEFAULT_OUTPUT_DIR)]
         output: PathBuf,
     },
 
-    /// Create a new Chatapp project
+    /// Create a new Platypus project
     New {
         /// Project name
         #[arg(value_name = "NAME")]
         name: String,
 
         /// Template to use (basic, data, dashboard)
-        #[arg(short, long, default_value = "basic")]
+        #[arg(short, long, default_value = platypus_server::config::DEFAULT_TEMPLATE)]
         template: String,
     },
 
@@ -70,7 +70,11 @@ async fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
 
     // Setup logging
-    let log_level = if cli.verbose { "debug" } else { "info" };
+    let log_level = if cli.verbose {
+        platypus_server::config::VERBOSE_LOG_LEVEL
+    } else {
+        platypus_server::config::NORMAL_LOG_LEVEL
+    };
     tracing_subscriber::fmt()
         .with_max_level(log_level.parse().unwrap_or(tracing::Level::INFO))
         .init();
@@ -91,29 +95,29 @@ async fn main() -> anyhow::Result<()> {
             create_project(name, template)?;
         }
         Commands::Version => {
-            println!("Chatapp {}", env!("CARGO_PKG_VERSION"));
+            println!("Platypus {}", env!("CARGO_PKG_VERSION"));
         }
     }
 
     Ok(())
 }
 
-/// Run a Webag application.
+/// Run a Platypus application.
 async fn run_app(
     _path: PathBuf,
     host: String,
     port: u16,
     _hot_reload: bool,
 ) -> anyhow::Result<()> {
-    println!("🚀 Starting Webag server on http://{}:{}", host, port);
+    println!("🚀 Starting Platypus server on http://{}:{}", host, port);
     println!("📝 Open your browser and navigate to the URL above");
 
     let config = platypus_server::ServerConfig {
-        app_name: "Webag App".to_string(),
+        app_name: platypus_server::config::DEFAULT_APP_NAME.to_string(),
         host,
         port,
-        max_body_size: 100 * 1024 * 1024,
-        session_timeout: 3600,
+        max_body_size: platypus_server::config::DEFAULT_MAX_BODY_SIZE,
+        session_timeout: platypus_server::config::DEFAULT_SESSION_TIMEOUT,
     };
 
     let server = AppServer::with_config(config);

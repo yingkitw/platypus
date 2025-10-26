@@ -200,31 +200,31 @@ mod tests {
 
     #[test]
     fn test_delta_generator() {
-        let gen = DeltaGenerator::new();
-        let id1 = gen.next_element_id();
-        let id2 = gen.next_element_id();
+        let r#gen = DeltaGenerator::new();
+        let id1 = r#gen.next_element_id();
+        let id2 = r#gen.next_element_id();
         assert_ne!(id1, id2);
     }
 
     #[test]
     fn test_add_element() {
-        let gen = DeltaGenerator::new();
-        let id = gen.add_element(ElementType::Text { value: "Hello".to_string() }, None);
-        assert!(gen.get_element(id).is_some());
+        let r#gen = DeltaGenerator::new();
+        let id = r#gen.add_element(ElementType::Text { value: "Hello".to_string() }, None);
+        assert!(r#gen.get_element(id).is_some());
     }
 
     #[test]
     fn test_deltas() {
-        let gen = DeltaGenerator::new();
-        gen.add_element(ElementType::Text { value: "Hello".to_string() }, None);
-        let deltas = gen.take_deltas();
+        let r#gen = DeltaGenerator::new();
+        r#gen.add_element(ElementType::Text { value: "Hello".to_string() }, None);
+        let deltas = r#gen.take_deltas();
         assert_eq!(deltas.len(), 1);
     }
 
     #[test]
     fn test_widgets() {
-        let gen = DeltaGenerator::new();
-        gen.set_widget("test".to_string(), WidgetValue::String("value".to_string()));
-        assert_eq!(gen.get_widget("test"), Some(WidgetValue::String("value".to_string())));
+        let r#gen = DeltaGenerator::new();
+        r#gen.set_widget("test".to_string(), WidgetValue::String("value".to_string()));
+        assert_eq!(r#gen.get_widget("test"), Some(WidgetValue::String("value".to_string())));
     }
 }

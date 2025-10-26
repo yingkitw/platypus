@@ -286,7 +286,16 @@ fn test_multi_page_app_with_icons() {
     let pages = nav.pages();
     
     assert_eq!(pages.len(), 3);
-    assert_eq!(pages[0].icon, Some("🏠".to_string()));
+    
+    // Check that all pages have icons
+    let home_page = pages.iter().find(|p| p.name == "home").unwrap();
+    assert_eq!(home_page.icon, Some("🏠".to_string()));
+    
+    let settings_page = pages.iter().find(|p| p.name == "settings").unwrap();
+    assert_eq!(settings_page.icon, Some("⚙️".to_string()));
+    
+    let help_page = pages.iter().find(|p| p.name == "help").unwrap();
+    assert_eq!(help_page.icon, Some("❓".to_string()));
 }
 
 // ============================================================================

@@ -3,6 +3,7 @@
 //! This crate provides the web server implementation for Webag applications,
 //! including HTTP endpoints and WebSocket support for real-time communication.
 
+pub mod config;
 pub mod error;
 pub mod executor;
 pub mod handler;

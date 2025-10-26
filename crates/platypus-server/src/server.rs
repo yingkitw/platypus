@@ -1,5 +1,6 @@
 //! Main application server.
 
+use crate::config;
 use crate::error::Result;
 use crate::handler;
 use crate::ws;
@@ -34,11 +35,11 @@ pub struct ServerConfig {
 impl Default for ServerConfig {
     fn default() -> Self {
         ServerConfig {
-            app_name: "Webag App".to_string(),
-            host: "127.0.0.1".to_string(),
-            port: 8501,
-            max_body_size: 100 * 1024 * 1024, // 100MB
-            session_timeout: 3600, // 1 hour
+            app_name: config::DEFAULT_APP_NAME.to_string(),
+            host: config::DEFAULT_HOST.to_string(),
+            port: config::DEFAULT_PORT,
+            max_body_size: config::DEFAULT_MAX_BODY_SIZE,
+            session_timeout: config::DEFAULT_SESSION_TIMEOUT,
         }
     }
 }
@@ -98,17 +99,17 @@ impl AppServer {
 
         Router::new()
             // Health check
-            .route("/health", get(handler::health))
+            .route(config::HEALTH_CHECK_PATH, get(handler::health))
             // App info
-            .route("/api/info", get(handler::app_info))
+            .route(config::APP_INFO_PATH, get(handler::app_info))
             // Main app page
-            .route("/", get(handler::index))
+            .route(config::INDEX_PATH, get(handler::index))
             // WebSocket endpoint
             .route(
-                "/ws",
+                config::WEBSOCKET_PATH,
                 get(move |ws| ws::ws_handler(ws, Arc::clone(&session_store))),
             )
-            .layer(DefaultBodyLimit::max(self.config.max_body_size as usize))
+            .layer(DefaultBodyLimit::max(config::max_body_size_usize()))
             .layer(CorsLayer::permissive())
             .layer(TraceLayer::new_for_http())
             .with_state(state)
@@ -153,14 +154,14 @@ mod tests {
     #[test]
     fn test_default_config() {
         let config = ServerConfig::default();
-        assert_eq!(config.port, 8501);
-        assert_eq!(config.host, "127.0.0.1");
+        assert_eq!(config.port, config::DEFAULT_PORT);
+        assert_eq!(config.host, config::DEFAULT_HOST);
     }
 
     #[test]
     fn test_server_creation() {
         let server = AppServer::new();
-        assert_eq!(server.config.port, 8501);
+        assert_eq!(server.config.port, config::DEFAULT_PORT);
     }
 
     #[test]
