@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package webag;
+
+// Message sent from client to server
+message BackMsg {
+    string session_id = 1;
+    
+    oneof type {
+        WidgetStateChangeMsg widget_state_change = 2;
+        RerunScriptMsg rerun_script = 3;
+        UserInteractionMsg user_interaction = 4;
+    }
+}
+
+message WidgetStateChangeMsg {
+    string widget_key = 1;
+    string value = 2;  // JSON-encoded
+}
+
+message RerunScriptMsg {
+    // Trigger a script rerun
+}
+
+message UserInteractionMsg {
+    string element_id = 1;
+    string interaction_type = 2;
+    string data = 3;  // JSON-encoded
+}

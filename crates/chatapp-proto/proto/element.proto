@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+package webag;
+
+// Element types supported by Webag
+message Element {
+    string id = 1;
+    
+    oneof type {
+        TextElement text = 2;
+        ButtonElement button = 3;
+        TextInputElement text_input = 4;
+        SliderElement slider = 5;
+        CheckboxElement checkbox = 6;
+        SelectboxElement selectbox = 7;
+        MultiSelectElement multiselect = 8;
+        MarkdownElement markdown = 9;
+        CodeElement code = 10;
+        ImageElement image = 11;
+        DataFrameElement dataframe = 12;
+        JsonElement json = 13;
+        ContainerElement container = 14;
+        ColumnElement column = 15;
+        RowElement row = 16;
+        TabElement tab = 17;
+        ExpanderElement expander = 18;
+        ProgressElement progress = 19;
+        SuccessElement success = 20;
+        ErrorElement error = 21;
+        WarningElement warning = 22;
+        InfoElement info = 23;
+    }
+}
+
+message TextElement {
+    string value = 1;
+}
+
+message ButtonElement {
+    string label = 1;
+    string key = 2;
+}
+
+message TextInputElement {
+    string label = 1;
+    string value = 2;
+    string key = 3;
+}
+
+message SliderElement {
+    string label = 1;
+    double value = 2;
+    double min = 3;
+    double max = 4;
+    string key = 5;
+}
+
+message CheckboxElement {
+    string label = 1;
+    bool value = 2;
+    string key = 3;
+}
+
+message SelectboxElement {
+    string label = 1;
+    repeated string options = 2;
+    string value = 3;
+    string key = 4;
+}
+
+message MultiSelectElement {
+    string label = 1;
+    repeated string options = 2;
+    repeated string values = 3;
+    string key = 4;
+}
+
+message MarkdownElement {
+    string value = 1;
+}
+
+message CodeElement {
+    string value = 1;
+    string language = 2;
+}
+
+message ImageElement {
+    string src = 1;
+    string caption = 2;
+    uint32 width = 3;
+}
+
+message DataFrameElement {
+    string data = 1;  // JSON-encoded
+}
+
+message JsonElement {
+    string data = 1;  // JSON-encoded
+}
+
+message ContainerElement {
+    repeated string children = 1;
+}
+
+message ColumnElement {
+    repeated string children = 1;
+    float width = 2;
+}
+
+message RowElement {
+    repeated string children = 1;
+}
+
+message TabElement {
+    string label = 1;
+    repeated string children = 2;
+}
+
+message ExpanderElement {
+    string label = 1;
+    bool expanded = 2;
+    repeated string children = 3;
+}
+
+message ProgressElement {
+    float value = 1;
+}
+
+message SuccessElement {
+    string message = 1;
+}
+
+message ErrorElement {
+    string message = 1;
+}
+
+message WarningElement {
+    string message = 1;
+}
+
+message InfoElement {
+    string message = 1;
+}

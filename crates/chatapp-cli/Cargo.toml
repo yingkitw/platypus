@@ -1,0 +1,19 @@
+[package]
+name = "chatapp-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "chatapp"
+path = "src/main.rs"
+
+[dependencies]
+chatapp-core = { path = "../chatapp-core" }
+chatapp-runtime = { path = "../chatapp-runtime" }
+chatapp-server = { path = "../chatapp-server" }
+tokio = { workspace = true }
+clap = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+anyhow = { workspace = true }

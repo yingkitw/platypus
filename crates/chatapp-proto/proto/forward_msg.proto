@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package webag;
+
+import "element.proto";
+
+// Message sent from server to client
+message ForwardMsg {
+    string hash = 1;
+    
+    oneof type {
+        NewSessionMsg new_session = 2;
+        DeltaMsg delta = 3;
+        ScriptFinishedMsg script_finished = 4;
+        SessionStatusMsg session_status = 5;
+        ErrorMsg error = 6;
+    }
+}
+
+message NewSessionMsg {
+    string session_id = 1;
+    string script_hash = 2;
+    repeated Element elements = 3;
+}
+
+message DeltaMsg {
+    repeated Delta deltas = 1;
+}
+
+message Delta {
+    oneof type {
+        AddElementDelta add_element = 1;
+        UpdateElementDelta update_element = 2;
+        RemoveElementDelta remove_element = 3;
+        ClearContainerDelta clear_container = 4;
+    }
+}
+
+message AddElementDelta {
+    Element element = 1;
+    string parent_id = 2;
+}
+
+message UpdateElementDelta {
+    Element element = 1;
+}
+
+message RemoveElementDelta {
+    string element_id = 1;
+}
+
+message ClearContainerDelta {
+    string container_id = 1;
+}
+
+message ScriptFinishedMsg {
+    enum Status {
+        SUCCESS = 0;
+        ERROR = 1;
+        INTERRUPTED = 2;
+    }
+    Status status = 1;
+    string message = 2;
+}
+
+message SessionStatusMsg {
+    enum Status {
+        RUNNING = 0;
+        IDLE = 1;
+        ERROR = 2;
+    }
+    Status status = 1;
+}
+
+message ErrorMsg {
+    string message = 1;
+    string traceback = 2;
+}

@@ -1,0 +1,74 @@
+# Rust
+/target/
+Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Build artifacts
+/build/
+/dist/
+*.o
+*.a
+*.so
+*.dylib
+
+# Dependencies
+/vendor/
+node_modules/
+package-lock.json
+yarn.lock
+
+# Test coverage
+/coverage/
+*.lcov
+.tarpaulin-report.html
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.swp
+*.swo
+*~
+
+# Frontend build
+/frontend/dist/
+/frontend/build/
+/frontend/node_modules/
+
+# Proto generated files
+**/proto_generated/
+
+# Misc
+.vscode-settings.json
+.history/
+.vscode/settings.json
