@@ -3,7 +3,7 @@
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 use tracing_subscriber;
-use chatapp_server::{AppServer, prelude::*};
+use chatapp_server::AppServer;
 
 #[derive(Parser)]
 #[command(name = "chatapp")]

@@ -29,6 +29,23 @@ message Element {
         ErrorElement error = 21;
         WarningElement warning = 22;
         InfoElement info = 23;
+        RadioElement radio = 24;
+        DateInputElement date_input = 25;
+        TimeInputElement time_input = 26;
+        ColorPickerElement color_picker = 27;
+        FileUploaderElement file_uploader = 28;
+        CameraInputElement camera_input = 29;
+        TabsElement tabs = 30;
+        SidebarElement sidebar = 31;
+        MetricElement metric = 32;
+        AudioElement audio = 33;
+        VideoElement video = 34;
+        HeadingElement heading = 35;
+        TextAreaElement text_area = 36;
+        NumberInputElement number_input = 37;
+        TableElement table = 38;
+        DividerElement divider = 39;
+        EmptyElement empty = 40;
     }
 }
 
@@ -140,4 +157,98 @@ message WarningElement {
 
 message InfoElement {
     string message = 1;
+}
+
+message RadioElement {
+    string label = 1;
+    repeated string options = 2;
+    string value = 3;
+    string key = 4;
+}
+
+message DateInputElement {
+    string label = 1;
+    string value = 2;
+    string key = 3;
+}
+
+message TimeInputElement {
+    string label = 1;
+    string value = 2;
+    string key = 3;
+}
+
+message ColorPickerElement {
+    string label = 1;
+    string value = 2;
+    string key = 3;
+}
+
+message FileUploaderElement {
+    string label = 1;
+    string key = 2;
+}
+
+message CameraInputElement {
+    string label = 1;
+    string key = 2;
+}
+
+message TabsElement {
+    repeated TabItem tabs = 1;
+}
+
+message TabItem {
+    string label = 1;
+    repeated string children = 2;
+}
+
+message SidebarElement {
+    repeated string children = 1;
+}
+
+message MetricElement {
+    string label = 1;
+    string value = 2;
+    string delta = 3;
+}
+
+message AudioElement {
+    string src = 1;
+}
+
+message VideoElement {
+    string src = 1;
+}
+
+message HeadingElement {
+    string value = 1;
+    uint32 level = 2;
+}
+
+message TextAreaElement {
+    string label = 1;
+    string value = 2;
+    string key = 3;
+}
+
+message NumberInputElement {
+    string label = 1;
+    double value = 2;
+    string key = 3;
+}
+
+message TableElement {
+    repeated string headers = 1;
+    repeated TableRow rows = 2;
+}
+
+message TableRow {
+    repeated string cells = 1;
+}
+
+message DividerElement {
+}
+
+message EmptyElement {
 }

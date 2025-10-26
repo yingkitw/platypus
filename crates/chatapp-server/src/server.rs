@@ -5,7 +5,7 @@ use crate::handler;
 use crate::ws;
 use axum::{
     extract::DefaultBodyLimit,
-    routing::{get, post},
+    routing::get,
     Router,
 };
 use serde::{Deserialize, Serialize};

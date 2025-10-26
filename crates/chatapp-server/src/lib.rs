@@ -4,7 +4,9 @@
 //! including HTTP endpoints and WebSocket support for real-time communication.
 
 pub mod error;
+pub mod executor;
 pub mod handler;
+pub mod message;
 pub mod server;
 pub mod ws;
 

@@ -1,10 +1,10 @@
-# Webag - Web App Generator
+# Chatapp - Web App Generator
 
 A high-performance Rust-based web app generator inspired by Streamlit, designed for building interactive data applications with ease and speed.
 
 ## Overview
 
-**Webag** (Web App Generator) is a Rust implementation of a Streamlit-compatible framework that enables developers to create interactive web applications with minimal code. It maintains API compatibility with Streamlit while providing superior performance and developer experience.
+**Chatapp** is a Rust implementation of a Streamlit-compatible framework that enables developers to create interactive web applications with minimal code. It maintains API compatibility with Streamlit while providing superior performance and developer experience.
 
 ### Key Features
 

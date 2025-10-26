@@ -1,9 +1,7 @@
 //! St context - Main API for building Webag applications.
 
-use crate::error::Result;
 use chatapp_core::element::{ElementId, ElementType};
 use chatapp_core::state::DeltaGenerator;
-use chatapp_core::widget::WidgetValue;
 
 /// The main context for building Webag applications.
 /// Provides an API similar to Streamlit's `st` module.
@@ -421,7 +419,7 @@ impl St {
 
         labels
             .iter()
-            .map(|label| {
+            .map(|_label| {
                 let tab_id = self.delta_gen.add_element(
                     ElementType::Container { children: vec![] },
                     Some(id),
