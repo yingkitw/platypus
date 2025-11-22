@@ -1,10 +1,10 @@
 [workspace]
 members = [
-    "crates/platypus-core",
-    "crates/platypus-proto",
-    "crates/platypus-runtime",
-    "crates/platypus-server",
-    "crates/platypus-cli",
+    "src/platypus-core",
+    "src/platypus-proto",
+    "src/platypus-runtime",
+    "src/platypus-server",
+    "src/platypus-cli",
     "examples",
 ]
 resolver = "2"

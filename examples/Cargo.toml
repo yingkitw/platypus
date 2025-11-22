@@ -22,8 +22,8 @@ name = "form_example"
 path = "form_example.rs"
 
 [dependencies]
-platypus-runtime = { path = "../crates/platypus-runtime" }
-platypus-server = { path = "../crates/platypus-server" }
+platypus-runtime = { path = "../src/platypus-runtime" }
+platypus-server = { path = "../src/platypus-server" }
 tokio = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
