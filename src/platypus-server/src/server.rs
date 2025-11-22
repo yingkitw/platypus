@@ -128,6 +128,8 @@ impl AppServer {
             .route(config::HEALTH_CHECK_PATH, get(handler::health))
             // App info
             .route(config::APP_INFO_PATH, get(handler::app_info))
+            // Favicon
+            .route("/favicon.ico", get(handler::favicon))
             // Main app page
             .route(config::INDEX_PATH, get(handler::index))
             // WebSocket endpoint

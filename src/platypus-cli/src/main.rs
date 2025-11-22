@@ -2,6 +2,7 @@
 
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
+use std::process::Command;
 use tracing_subscriber;
 use platypus_server::AppServer;
 
@@ -31,7 +32,7 @@ enum Commands {
         port: u16,
 
         /// Host to bind to
-        #[arg(short, long, default_value = platypus_server::config::DEFAULT_HOST)]
+        #[arg(short = 'H', long, default_value = platypus_server::config::DEFAULT_HOST)]
         host: String,
 
         /// Enable hot reload
@@ -104,11 +105,32 @@ async fn main() -> anyhow::Result<()> {
 
 /// Run a Platypus application.
 async fn run_app(
-    _path: PathBuf,
+    path: PathBuf,
     host: String,
     port: u16,
     _hot_reload: bool,
 ) -> anyhow::Result<()> {
+    // Check if path is a .rs file in examples directory
+    if let Some(file_name) = path.file_stem() {
+        let bin_name = file_name.to_string_lossy();
+        
+        // Try to run as a cargo binary
+        println!("🚀 Running example: {}", bin_name);
+        let mut cmd = Command::new("cargo");
+        cmd.args(&["run", "-p", "platypus-examples", "--bin", &bin_name])
+            .env("PLATYPUS_HOST", &host)
+            .env("PLATYPUS_PORT", port.to_string());
+        
+        let status = cmd.status()?;
+        
+        if !status.success() {
+            anyhow::bail!("Failed to run example: {}", bin_name);
+        }
+        
+        return Ok(());
+    }
+    
+    // Fallback: start server without app
     println!("🚀 Starting Platypus server on http://{}:{}", host, port);
     println!("📝 Open your browser and navigate to the URL above");
 

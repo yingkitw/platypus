@@ -118,7 +118,32 @@ async fn handle_socket(socket: WebSocket, session_store: Arc<SessionStore>, app_
                         ) {
                             tracing::debug!("Widget change: {} = {}", key, value);
                             
-                            // Rerun script with widget change
+                            // Convert value to string for storage
+                            let value_str = match value {
+                                serde_json::Value::String(s) => s.clone(),
+                                serde_json::Value::Number(n) => n.to_string(),
+                                serde_json::Value::Bool(b) => b.to_string(),
+                                _ => value.to_string(),
+                            };
+                            
+                            // Handle widget change and rerun script
+                            match executor.handle_widget_change(session_id, key, &value_str) {
+                                Ok(deltas) => {
+                                    let json_msg = message::deltas_to_json(deltas);
+                                    if let Ok(json_str) = serde_json::to_string(&json_msg) {
+                                        let _ = sender.send(Message::Text(json_str)).await;
+                                    }
+                                }
+                                Err(e) => {
+                                    tracing::error!("Script execution error: {}", e);
+                                }
+                            }
+                        }
+                    } else if let Some("button_click") = msg.get("type").and_then(|v| v.as_str()) {
+                        if let Some(key) = msg.get("key").and_then(|v| v.as_str()) {
+                            tracing::debug!("Button click: {}", key);
+                            
+                            // Rerun script on button click
                             match executor.execute_script(session_id) {
                                 Ok(deltas) => {
                                     let json_msg = message::deltas_to_json(deltas);

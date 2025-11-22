@@ -193,6 +193,24 @@
         .status.disconnected {
             color: #da1e28;
         }
+
+        .columns-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .column {
+            flex: 1;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .container {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -236,6 +254,8 @@
                 
                 if (message.type === 'delta') {
                     renderElements(message.elements);
+                } else if (message.type === 'button_click') {
+                    console.log('Button click response:', message);
                 }
             } catch (e) {
                 console.error('Failed to parse message:', e);
@@ -245,21 +265,88 @@
         function renderElements(elements) {
             appEl.innerHTML = '';
             
+            // Build a map of elements by ID for easier lookup
+            const elementMap = {};
             elements.forEach(delta => {
                 if (delta.type === 'add_element') {
-                    const el = renderElement(delta.element);
-                    if (el) {
-                        appEl.appendChild(el);
+                    elementMap[delta.element.id] = delta.element;
+                }
+            });
+            
+            // Render top-level elements
+            let consecutiveColumns = [];
+            elements.forEach(delta => {
+                if (delta.type === 'add_element' && !delta.element.parent_id) {
+                    if (delta.element.type === 'column') {
+                        consecutiveColumns.push(delta.element);
+                    } else {
+                        // Flush any accumulated columns
+                        if (consecutiveColumns.length > 0) {
+                            const columnsContainer = document.createElement('div');
+                            columnsContainer.className = 'columns-container';
+                            consecutiveColumns.forEach(col => {
+                                const el = renderElement(col, elementMap);
+                                if (el) columnsContainer.appendChild(el);
+                            });
+                            appEl.appendChild(columnsContainer);
+                            consecutiveColumns = [];
+                        }
+                        // Render non-column element
+                        const el = renderElement(delta.element, elementMap);
+                        if (el) appEl.appendChild(el);
                     }
                 }
             });
+            
+            // Flush any remaining columns
+            if (consecutiveColumns.length > 0) {
+                const columnsContainer = document.createElement('div');
+                columnsContainer.className = 'columns-container';
+                consecutiveColumns.forEach(col => {
+                    const el = renderElement(col, elementMap);
+                    if (el) columnsContainer.appendChild(el);
+                });
+                appEl.appendChild(columnsContainer);
+            }
         }
 
-        function renderElement(element) {
+        function renderElement(element, elementMap = {}) {
             const div = document.createElement('div');
             div.className = 'element';
             
             switch (element.type) {
+                case 'column':
+                    div.className = 'column';
+                    // Render children if they exist
+                    if (element.children && element.children.length > 0) {
+                        element.children.forEach(childId => {
+                            const child = elementMap[childId];
+                            if (child) {
+                                const childEl = renderElement(child, elementMap);
+                                if (childEl) {
+                                    div.appendChild(childEl);
+                                }
+                            }
+                        });
+                    }
+                    return div;
+                
+                case 'container':
+                    div.className = 'container';
+                    // Render children if they exist
+                    if (element.children && element.children.length > 0) {
+                        element.children.forEach(childId => {
+                            const child = elementMap[childId];
+                            if (child) {
+                                const childEl = renderElement(child, elementMap);
+                                if (childEl) {
+                                    div.appendChild(childEl);
+                                }
+                            }
+                        });
+                    }
+                    return div;
+                
                 case 'text':
                     div.textContent = element.value;
                     div.className += ' text';
@@ -277,7 +364,10 @@
                 case 'button':
                     const btn = document.createElement('button');
                     btn.textContent = element.label;
-                    btn.onclick = () => console.log('Button clicked:', element.key);
+                    btn.onclick = () => {
+                        console.log('Button clicked:', element.key);
+                        sendButtonClick(element.key);
+                    };
                     return btn;
                     
                 case 'text_input':
@@ -285,7 +375,14 @@
                     label1.textContent = element.label;
                     const input1 = document.createElement('input');
                     input1.type = 'text';
-                    input1.value = element.value || '';
+                    const storedTextValue = widgetValues[element.key];
+                    input1.value = storedTextValue !== undefined ? storedTextValue : (element.value || '');
+                    updateWidgetValue(element.key, input1.value);
+                    const handleTextChange = () => {
+                        sendWidgetChange(element.key, input1.value);
+                    };
+                    input1.oninput = handleTextChange;
+                    input1.onchange = handleTextChange;
                     const group1 = document.createElement('div');
                     group1.className = 'form-group';
                     group1.appendChild(label1);
@@ -300,10 +397,11 @@
                     const storedValue = widgetValues[element.key];
                     input2.value = storedValue !== undefined ? storedValue : (element.value || 0);
                     updateWidgetValue(element.key, input2.value);
-                    input2.onchange = () => {
-                        // Send widget change event to server
+                    const handleNumberChange = () => {
                         sendWidgetChange(element.key, input2.value);
                     };
+                    input2.oninput = handleNumberChange;
+                    input2.onchange = handleNumberChange;
                     const group2 = document.createElement('div');
                     group2.className = 'form-group';
                     group2.appendChild(label2);
@@ -314,7 +412,12 @@
                     const label3 = document.createElement('label');
                     const input3 = document.createElement('input');
                     input3.type = 'checkbox';
-                    input3.checked = element.value || false;
+                    const storedCheckValue = widgetValues[element.key];
+                    input3.checked = storedCheckValue !== undefined ? (storedCheckValue === 'true') : (element.value || false);
+                    updateWidgetValue(element.key, input3.checked.toString());
+                    input3.onchange = () => {
+                        sendWidgetChange(element.key, input3.checked.toString());
+                    };
                     label3.appendChild(input3);
                     label3.appendChild(document.createTextNode(' ' + element.label));
                     const group3 = document.createElement('div');
@@ -416,6 +519,26 @@
                 console.log('Sent widget change:', key, value);
             } catch (e) {
                 console.error('Failed to send widget change:', e);
+            }
+        }
+
+        function sendButtonClick(key) {
+            if (!key || !ws || ws.readyState !== WebSocket.OPEN) {
+                return;
+            }
+            
+            // Send button click event to server
+            const message = {
+                type: 'button_click',
+                key: key,
+                all_values: widgetValues
+            };
+            
+            try {
+                ws.send(JSON.stringify(message));
+                console.log('Sent button click:', key);
+            } catch (e) {
+                console.error('Failed to send button click:', e);
             }
         }
 
